@@ -46,6 +46,7 @@ const TextPressure = ({
 
   minFontSize = 24,
 }: TextPressureProps) => {
+  const [isMounted, setIsMounted] = useState(false)
   const containerRef = useRef<HTMLDivElement | null>(null)
   const titleRef = useRef<HTMLHeadingElement | null>(null)
   const spansRef = useRef<HTMLSpanElement[]>([])
@@ -56,6 +57,10 @@ const TextPressure = ({
   const [fontSize, setFontSize] = useState(minFontSize)
   const [scaleY, setScaleY] = useState(1)
   const [lineHeight, setLineHeight] = useState(1)
+
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
 
   const chars = (text || "").split("")
 
@@ -169,6 +174,41 @@ const TextPressure = ({
 
   const dynamicClassName = [className, flex ? "tp-flex" : "", stroke ? "tp-stroke" : ""].filter(Boolean).join(" ")
 
+  // Prevent hydration issues by only rendering interactive version on client
+  if (!isMounted) {
+    return (
+      <div
+        style={{
+          position: "relative",
+          width: "100%",
+          height: "100%",
+          background: "transparent",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center"
+        }}
+      >
+        <h1
+          className={className}
+          style={{
+            fontFamily: "monospace",
+            textTransform: "uppercase",
+            fontSize: minFontSize,
+            margin: 0,
+            textAlign: "center",
+            userSelect: "none",
+            whiteSpace: "nowrap",
+            fontWeight: 100,
+            width: "100%",
+            color: textColor
+          }}
+        >
+          {text}
+        </h1>
+      </div>
+    )
+  }
+
   return (
     <div
       ref={containerRef}
@@ -179,10 +219,10 @@ const TextPressure = ({
         background: "transparent",
       }}
     >
-      <style>{`
+      <style suppressHydrationWarning>{`
         @font-face {
-          font-family: '${fontFamily}';
-          src: url('${fontUrl}');
+          font-family: "${fontFamily}";
+          src: url("${fontUrl}");
           font-style: normal;
           font-display: swap;
         }
@@ -234,7 +274,11 @@ const TextPressure = ({
         {chars.map((char, i) => (
           <span
             key={i}
-            ref={(el) => (spansRef.current[i] = el as HTMLSpanElement)}
+            ref={(el) => {
+              if (el) {
+                spansRef.current[i] = el
+              }
+            }}
             data-char={char}
             style={{
               display: "inline-block",

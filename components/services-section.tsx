@@ -70,12 +70,12 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ service, isActive, onClick })
         <div className="rounded-full bg-blue-400/10 p-2">
           {service.icon}
         </div>
-        <div>
+        <div className="flex-1">
           <h3 className="text-lg font-semibold text-white">{service.title}</h3>
           <p className="text-sm text-gray-400 line-clamp-2">{service.description}</p>
         </div>
       </div>
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between mt-2">
         <span className="text-xs text-gray-400">Click to learn more</span>
         <ArrowRight className="h-4 w-4 text-blue-400" />
       </div>
@@ -467,8 +467,8 @@ export default function ServicesSection() {
     },
     {
       id: "brand-campaigns",
-      title: "Brand & Marketing Campaigns",
-      description: "Creative campaigns that build brand awareness and drive results",
+      title: "Marketing Campaigns",
+      description: "Creative campaigns that build brand awareness",
       icon: <Megaphone className="h-6 w-6 text-blue-400" />,
       features: [
         "Brand identity development",
@@ -502,8 +502,8 @@ export default function ServicesSection() {
     },
     {
       id: "landing-pages",
-      title: "Brand/Product Landing Pages",
-      description: "High-converting landing pages that turn visitors into customers",
+      title: "Brand Landing Pages",
+      description: "High-converting landing pages for your business",
       icon: <Globe className="h-6 w-6 text-blue-400" />,
       features: [
         "Conversion-optimized design",
@@ -642,7 +642,7 @@ export default function ServicesSection() {
             href="https://cal.com" 
             target="_blank" 
             rel="noopener noreferrer"
-            className="bg-blue-600 text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-blue-700 transition-colors inline-flex items-center gap-2"
+            className="bg-transparent border-2 border-white text-white px-8 py-4 rounded-lg font-semibold text-lg transition-colors inline-flex items-center gap-2"
           >
             <Calendar className="h-5 w-5" />
             Book a Consultation Call

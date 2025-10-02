@@ -110,7 +110,7 @@ export const AnimatedTestimonials = ({
               ease: "easeInOut",
             }}
           >
-            <div className="text-lg text-slate-300 dark:text-slate-300 max-w-sm mx-auto md:mx-0">
+            <div className="text-lg text-white max-w-sm mx-auto md:mx-0 font-mono">
               {testimonials[active].quote.split(" ").map((word, index) => (
                 <motion.span
                   key={index}
@@ -135,23 +135,23 @@ export const AnimatedTestimonials = ({
                 </motion.span>
               ))}
             </div>
-            <div className="text-sm text-slate-400 dark:text-slate-400 mt-8">
-              <div className="font-medium text-slate-200 dark:text-slate-200">{testimonials[active].name}</div>
-              <div className="text-slate-400 dark:text-slate-400">{testimonials[active].designation}</div>
+            <div className="text-sm text-gray-300 mt-8 font-mono">
+              <div className="font-medium text-white">{testimonials[active].name}</div>
+              <div className="text-gray-400">{testimonials[active].designation}</div>
             </div>
           </motion.div>
           <div className="flex gap-4 pt-8 md:pt-0">
             <button
               onClick={handlePrev}
-              className="h-7 w-7 rounded-full bg-slate-700 dark:bg-slate-700 flex items-center justify-center group/button"
+              className="h-7 w-7 rounded-full bg-white hover:bg-gray-200 flex items-center justify-center group/button transition-all duration-300 hover:scale-110 active:scale-95"
             >
-              <IconArrowLeft className="h-5 w-5 text-slate-300 dark:text-slate-300 group-hover/button:rotate-12 transition-transform duration-300" />
+              <IconArrowLeft className="h-5 w-5 text-black group-hover/button:rotate-12 transition-transform duration-300" />
             </button>
             <button
               onClick={handleNext}
-              className="h-7 w-7 rounded-full bg-slate-700 dark:bg-slate-700 flex items-center justify-center group/button"
+              className="h-7 w-7 rounded-full bg-white hover:bg-gray-200 flex items-center justify-center group/button transition-all duration-300 hover:scale-110 active:scale-95"
             >
-              <IconArrowRight className="h-5 w-5 text-slate-300 dark:text-slate-300 group-hover/button:-rotate-12 transition-transform duration-300" />
+              <IconArrowRight className="h-5 w-5 text-black group-hover/button:-rotate-12 transition-transform duration-300" />
             </button>
           </div>
         </div>

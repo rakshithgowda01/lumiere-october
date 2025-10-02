@@ -11,12 +11,25 @@ interface ParallaxScrollProps {
   onImageClick?: (image: string, index: number) => void;
 }
 
+const SmartImg: React.FC<{ src: string; alt: string; className?: string; onClick?: () => void }> = ({ src, alt, className, onClick }) => {
+  const hasExt = /\.[a-zA-Z0-9]+$/.test(src)
+  const candidates = hasExt ? [src] : [
+    `${src}.jpg`, `${src}.JPG`, `${src}.jpeg`, `${src}.JPEG`, `${src}.png`, `${src}.PNG`, `${src}.webp`, `${src}.WEBP`
+  ]
+  const [i, setI] = useState(0)
+  const current = candidates[Math.min(i, candidates.length - 1)]
+  return (
+    <img src={current} alt={alt} className={className} onError={() => setI((x) => Math.min(x + 1, candidates.length - 1))} onClick={onClick} loading="lazy" />
+  )
+}
+
 const ParallaxScroll: React.FC<ParallaxScrollProps> = ({
   images = [],
   className,
   onImageClick,
 }) => {
   const gridRef = useRef<HTMLDivElement>(null);
+  const isMobile = typeof window !== 'undefined' ? window.innerWidth < 768 : true;
   const { scrollYProgress } = useScroll({
     container: gridRef,
     offset: ["start start", "end start"],
@@ -34,26 +47,24 @@ const ParallaxScroll: React.FC<ParallaxScrollProps> = ({
 
   return (
     <div
-      className={cn("h-[40rem] items-start overflow-y-auto w-full", className)}
+      className={cn(isMobile ? "items-start w-full" : "h-[40rem] items-start overflow-y-auto w-full", className)}
       ref={gridRef}
     >
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-start max-w-5xl mx-auto gap-10 py-40 px-10">
         <div className="grid gap-10">
           {firstPart.map((el, idx) => (
             <motion.div
-              style={{ y: translateFirst }}
+              style={isMobile ? undefined : { y: translateFirst }}
               key={"grid-1" + idx}
               whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 1.03 }}
               transition={{ duration: 0.2 }}
             >
-              <img
+              <SmartImg
                 src={el}
                 className="h-80 w-full object-cover object-center rounded-lg cursor-pointer hover:shadow-2xl transition-shadow duration-300"
-                height={400}
-                width={400}
                 alt="Gallery image"
-                onClick={() => onImageClick?.(el, idx)}
-                loading="lazy"
+                onClick={isMobile ? undefined : () => onImageClick?.(el, idx)}
               />
             </motion.div>
           ))}
@@ -61,19 +72,17 @@ const ParallaxScroll: React.FC<ParallaxScrollProps> = ({
         <div className="grid gap-10">
           {secondPart.map((el, idx) => (
             <motion.div
-              style={{ y: translateSecond }}
+              style={isMobile ? undefined : { y: translateSecond }}
               key={"grid-2" + idx}
               whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 1.03 }}
               transition={{ duration: 0.2 }}
             >
-              <img
+              <SmartImg
                 src={el}
                 className="h-80 w-full object-cover object-center rounded-lg cursor-pointer hover:shadow-2xl transition-shadow duration-300"
-                height={400}
-                width={400}
                 alt="Gallery image"
-                onClick={() => onImageClick?.(el, idx + firstPart.length)}
-                loading="lazy"
+                onClick={isMobile ? undefined : () => onImageClick?.(el, idx + firstPart.length)}
               />
             </motion.div>
           ))}
@@ -81,19 +90,17 @@ const ParallaxScroll: React.FC<ParallaxScrollProps> = ({
         <div className="grid gap-10">
           {thirdPart.map((el, idx) => (
             <motion.div
-              style={{ y: translateThird }}
+              style={isMobile ? undefined : { y: translateThird }}
               key={"grid-3" + idx}
               whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 1.03 }}
               transition={{ duration: 0.2 }}
             >
-              <img
+              <SmartImg
                 src={el}
                 className="h-80 w-full object-cover object-center rounded-lg cursor-pointer hover:shadow-2xl transition-shadow duration-300"
-                height={400}
-                width={400}
                 alt="Gallery image"
-                onClick={() => onImageClick?.(el, idx + firstPart.length + secondPart.length)}
-                loading="lazy"
+                onClick={isMobile ? undefined : () => onImageClick?.(el, idx + firstPart.length + secondPart.length)}
               />
             </motion.div>
           ))}
@@ -103,26 +110,7 @@ const ParallaxScroll: React.FC<ParallaxScrollProps> = ({
   );
 };
 
-const defaultImages = [
-  "https://images.unsplash.com/photo-1554080353-a576cf803bda?auto=format&fit=crop&w=1600&q=80",
-  "https://images.unsplash.com/photo-1505144808419-1957a94ca61e?auto=format&fit=crop&w=1600&q=80",
-  "https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=1600&q=80",
-  "https://images.unsplash.com/photo-1682686581854-5e71f58e7e3f?auto=format&fit=crop&w=1600&q=80",
-  "https://images.unsplash.com/photo-1510784722466-f2aa9c52fff6?auto=format&fit=crop&w=1600&q=80",
-  "https://images.unsplash.com/photo-1505765050516-f72dcac9c60e?auto=format&fit=crop&w=1600&q=80",
-  "https://images.unsplash.com/photo-1439853949127-fa647821eba0?auto=format&fit=crop&w=1600&q=80",
-  "https://images.unsplash.com/photo-1612801356940-8fdcde8aef61?auto=format&fit=crop&w=1600&q=80",
-  "https://images.unsplash.com/photo-1529218402470-5dec8fea0761?auto=format&fit=crop&w=1600&q=80",
-  "https://images.unsplash.com/photo-1542051841857-5f90071e7989?auto=format&fit=crop&w=1600&q=80",
-  "https://images.unsplash.com/photo-1604928141064-207cea6f571f?auto=format&fit=crop&w=1600&q=80",
-  "https://images.unsplash.com/photo-1573455494060-c5595004fb6c?auto=format&fit=crop&w=1600&q=80",
-  "https://images.unsplash.com/photo-1542052125323-e69ad37a47c2?auto=format&fit=crop&w=1600&q=80",
-  "https://images.unsplash.com/photo-1564284369929-026ba231f89b?auto=format&fit=crop&w=1600&q=80",
-  "https://images.unsplash.com/photo-1532236204992-f5e85c024202?auto=format&fit=crop&w=1600&q=80",
-  "https://images.unsplash.com/photo-1493515322954-4fa727e97985?auto=format&fit=crop&w=1600&q=80",
-  "https://images.unsplash.com/photo-1528361237150-8a9a7df33035?auto=format&fit=crop&w=1600&q=80",
-  "https://images.unsplash.com/photo-1608875004752-2fdb6a39ba4c?auto=format&fit=crop&w=1600&q=80",
-];
+const defaultImages = Array.from({ length: 74 }, (_, i) => `/gallery/photo${i + 1}`);
 
 export default function ParallaxGalleryPage() {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
@@ -163,11 +151,12 @@ export default function ParallaxGalleryPage() {
     return () => window.removeEventListener('keydown', handleKeyPress);
   }, [selectedImage, selectedIndex]);
 
+  const isMobile = typeof window !== 'undefined' ? window.innerWidth < 768 : true;
   return (
-    <div className="bg-gray-950 h-screen overflow-hidden">
+    <div className="bg-gray-950 min-h-screen overflow-x-hidden">
       <div className="py-10">
-        <h1 className="text-6xl font-bold text-center text-white mb-16">Portfolio Gallery</h1>
-        <ParallaxScroll images={defaultImages} onImageClick={handleImageClick} />
+        <h1 className="text-3xl md:text-6xl font-bold text-center text-white mb-10 md:mb-16">Portfolio Gallery</h1>
+        <ParallaxScroll images={defaultImages} onImageClick={isMobile ? undefined : handleImageClick} />
       </div>
 
       <AnimatePresence>

@@ -30,6 +30,7 @@ export const MenuVertical = ({
           className="group/nav flex items-center gap-2 cursor-pointer text-zinc-900 dark:text-zinc-50"
           initial="initial"
           whileHover="hover"
+          whileTap="hover"
         >
           <motion.div
             variants={{

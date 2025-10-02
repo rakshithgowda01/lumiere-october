@@ -12,7 +12,7 @@ export default function FloatingSocialWidget() {
   const socialLinks = [
     {
       icon: Instagram,
-      href: "https://instagram.com/lumiere",
+      href: "https://www.instagram.com/lumiere.chronicle/",
       label: "Instagram",
       color: "from-purple-500 to-pink-500",
     },

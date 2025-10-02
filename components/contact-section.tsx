@@ -85,7 +85,7 @@ export default function ContactSection() {
   ]
 
   const ProjectForm = () => (
-    <div className="h-full flex flex-col bg-transparent p-6 rounded-lg border border-gray-800 text-black">
+    <div className="h-full flex flex-col bg-black p-6 rounded-lg border border-gray-800 text-white">
       <form onSubmit={handleSubmit} className="space-y-4 h-full flex flex-col">
         <div className="grid grid-cols-1 gap-4">
           <Input
@@ -94,7 +94,7 @@ export default function ContactSection() {
             placeholder="Your Name"
             value={formData.name}
             onChange={handleChange}
-            className="bg-white border-gray-300 text-black placeholder:text-gray-500"
+            className="bg-gray-900 border-gray-600 text-white placeholder:text-gray-400 font-mono"
             required
           />
           <Input
@@ -103,7 +103,7 @@ export default function ContactSection() {
             placeholder="Your Email"
             value={formData.email}
             onChange={handleChange}
-            className="bg-white border-gray-300 text-black placeholder:text-gray-500"
+            className="bg-gray-900 border-gray-600 text-white placeholder:text-gray-400 font-mono"
             required
           />
         </div>
@@ -113,15 +113,15 @@ export default function ContactSection() {
           value={formData.message}
           onChange={handleChange}
           rows={6}
-          className="bg-white border-gray-300 text-black placeholder:text-gray-500 resize-none flex-1"
+          className="bg-gray-900 border-gray-600 text-white placeholder:text-gray-400 resize-none flex-1 font-mono"
           required
         />
         <div className="flex flex-col gap-4 mt-auto">
-          <Button type="submit" className="w-full bg-white text-black hover:bg-gray-200">
+          <Button type="submit" className="w-full bg-white text-black hover:bg-gray-200 font-mono transition-all duration-300 hover:scale-105 active:scale-95">
             Send Message
           </Button>
           <div className="flex items-center justify-center">
-            <span className="text-gray-600 text-sm mr-3">Our Team:</span>
+            <span className="text-gray-400 text-sm mr-3 font-mono">Our Team:</span>
             <AnimatedTooltip items={teamMembers} />
           </div>
         </div>
@@ -130,30 +130,33 @@ export default function ContactSection() {
   )
 
   const ConnectWithUs = () => (
-    <div className="bg-transparent p-6 rounded-lg border border-gray-800 h-full flex flex-col text-black">
+    <div className="bg-black p-6 rounded-lg border border-gray-800 h-full flex flex-col text-white">
       <div className="flex flex-col h-full overflow-hidden">
-        <h3 className="text-black font-semibold mb-4 text-lg">Connect With Us</h3>
-        <div className="text-gray-700 text-sm mb-4 leading-relaxed space-y-1">
-          <p>Contact: <span className="font-medium text-black">9901584053, 9901584693, 9902066873</span></p>
-          <p>Email: <a href="mailto:lumiere.elevated@gmail.com" className="underline">lumiere.elevated@gmail.com</a></p>
+        <h3 className="text-white font-semibold mb-4 text-lg font-mono">Connect With Us</h3>
+        <div className="text-gray-300 text-sm mb-4 leading-relaxed space-y-1 font-mono">
+          <p>Email: <a href="mailto:lumiere.elevated@gmail.com" className="underline text-white">lumiere.elevated@gmail.com</a></p>
         </div>
 
         <div className="flex gap-4 justify-center mb-6">
           <a
-            href="#"
-            className="w-12 h-12 bg-black hover:bg-gray-900 text-white transition-colors duration-300 rounded-full flex items-center justify-center"
+            href="https://www.instagram.com/lumiere.chronicle/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-12 h-12 bg-white hover:bg-gray-200 text-black transition-all duration-300 hover:scale-110 active:scale-95 rounded-full flex items-center justify-center"
           >
             <Instagram className="w-5 h-5" />
           </a>
           <a
-            href="#"
-            className="w-12 h-12 bg-black hover:bg-gray-900 text-white transition-colors duration-300 rounded-full flex items-center justify-center"
+            href="tel:+919901584053"
+            className="w-12 h-12 bg-white hover:bg-gray-200 text-black transition-all duration-300 hover:scale-110 active:scale-95 rounded-full flex items-center justify-center"
           >
-            <Youtube className="w-5 h-5" />
+            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56-.35-.12-.74-.03-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"/>
+            </svg>
           </a>
           <a
             href="mailto:lumiere.elevated@gmail.com"
-            className="w-12 h-12 bg-black hover:bg-gray-900 text-white transition-colors duration-300 rounded-full flex items-center justify-center"
+            className="w-12 h-12 bg-white hover:bg-gray-200 text-black transition-all duration-300 hover:scale-110 active:scale-95 rounded-full flex items-center justify-center"
           >
             <Mail className="w-5 h-5" />
           </a>
@@ -161,20 +164,23 @@ export default function ContactSection() {
 
         <div className="space-y-3 mt-auto">
           <div className="flex items-center gap-3">
-            <div className="w-2 h-2 bg-purple-600 rounded-full flex-shrink-0"></div>
-            <span className="text-black text-sm font-medium">Free Consultation</span>
+            <div className="w-2 h-2 bg-purple-400 rounded-full flex-shrink-0"></div>
+            <span className="text-white text-sm font-medium font-mono">Free Consultation</span>
           </div>
           <div className="flex items-center gap-3">
-            <div className="w-2 h-2 bg-purple-600 rounded-full flex-shrink-0"></div>
-            <span className="text-black text-sm font-medium">Custom Solutions</span>
+            <div className="w-2 h-2 bg-purple-400 rounded-full flex-shrink-0"></div>
+            <span className="text-white text-sm font-medium font-mono">Custom Solutions</span>
           </div>
           <div className="flex items-center gap-3">
-            <div className="w-2 h-2 bg-purple-600 rounded-full flex-shrink-0"></div>
-            <span className="text-black text-sm font-medium">24/7 Support</span>
+            <div className="w-2 h-2 bg-purple-400 rounded-full flex-shrink-0"></div>
+            <span className="text-white text-sm font-medium font-mono">24/7 Support</span>
           </div>
           <div className="flex items-center gap-3">
-            <div className="w-2 h-2 bg-purple-600 rounded-full flex-shrink-0"></div>
-            <span className="text-black text-sm font-medium">Fast Delivery</span>
+            <div className="w-2 h-2 bg-purple-400 rounded-full flex-shrink-0"></div>
+            <span className="text-white text-sm font-medium font-mono">Fast Delivery</span>
+          </div>
+          <div className="text-gray-300 text-sm mt-4 leading-relaxed font-mono">
+            <p>Contact: <span className="font-medium text-white">9901584053, 9901584693, 9902066873</span></p>
           </div>
         </div>
       </div>
@@ -186,37 +192,30 @@ export default function ContactSection() {
       <ContainerScroll
         titleComponent={
           <>
-            <h1 className="text-4xl md:text-6xl font-serif font-bold text-black mb-4">
+            <h1 className="text-4xl md:text-6xl font-mono font-bold text-white mb-4">
               Let's Create <br />
-              <span className="text-4xl md:text-[6rem] font-bold mt-1 leading-none text-black">
+              <span className="text-4xl md:text-[6rem] font-mono font-bold mt-1 leading-none text-white">
                 Together
               </span>
             </h1>
           </>
         }
       >
-        <div className="w-full h-[120vh] overflow-y-auto scrollbar-thin scrollbar-track-gray-900 scrollbar-thumb-gray-600">
-          <div className="p-8 max-w-7xl mx-auto text-black">
-            <BentoGrid className="max-w-7xl mx-auto mb-8 grid-cols-1 md:grid-cols-2 gap-6">
-              <BentoGridItem
-                title="Start Your Project"
-                description="Ready to bring your vision to life? Let's discuss your project and create something amazing together."
-                header={<ProjectForm />}
-                icon={<User className="h-4 w-4 text-neutral-500" />}
-                className="md:row-span-2 bg-transparent border-gray-800"
-              />
+        <div className="w-full h-[120vh] overflow-y-auto scrollbar-thin scrollbar-track-gray-900 scrollbar-thumb-gray-600 bg-black">
+          <div className="p-8 max-w-7xl mx-auto text-white">
+            <div className="max-w-2xl mx-auto mb-8">
               <BentoGridItem
                 title="Connect With Us"
                 description="Follow our journey and stay updated with our latest work."
                 header={<ConnectWithUs />}
                 icon={<MessageSquare className="h-4 w-4 text-neutral-500" />}
-                className="md:row-span-2 bg-transparent border-gray-800"
+                className="bg-black border-gray-800 w-full"
               />
-            </BentoGrid>
+            </div>
 
             {/* Testimonials Section */}
-            <div className="mt-8 bg-transparent border border-gray-800 rounded-lg p-8">
-              <h3 className="text-2xl font-semibold text-black mb-6 text-center">What Our Clients Say</h3>
+            <div className="mt-8 bg-black border border-gray-800 rounded-lg p-8">
+              <h3 className="text-2xl font-semibold text-white mb-6 text-center font-mono">What Our Clients Say</h3>
               <AnimatedTestimonials testimonials={testimonials} autoplay={true} />
             </div>
           </div>

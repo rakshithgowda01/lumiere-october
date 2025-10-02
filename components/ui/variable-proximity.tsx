@@ -11,6 +11,15 @@ export default function VariableProximity({ text, className = "" }: VariableProx
   const containerRef = useRef<HTMLDivElement>(null)
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
   const [isHovered, setIsHovered] = useState(false)
+  const [isTouch, setIsTouch] = useState(false)
+
+  useEffect(() => {
+    const onTouchStart = () => setIsTouch(true)
+    window.addEventListener("touchstart", onTouchStart, { once: true, passive: true })
+    return () => {
+      window.removeEventListener("touchstart", onTouchStart)
+    }
+  }, [])
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -31,7 +40,7 @@ export default function VariableProximity({ text, className = "" }: VariableProx
   }, [isHovered])
 
   const getLetterStyle = (index: number, totalLetters: number) => {
-    if (!containerRef.current || !isHovered) {
+    if (!containerRef.current || (!isHovered && !isTouch)) {
       return {
         fontSize: "1em",
         fontWeight: 400,

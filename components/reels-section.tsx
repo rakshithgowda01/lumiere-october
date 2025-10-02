@@ -37,14 +37,10 @@ const ReelCard: React.FC<ReelCardProps> = ({ reel, isExpanded, onHover, onLeave,
     el.muted = isMuted
     el.addEventListener('loadedmetadata', tryPlay, { once: true })
     tryPlay()
-    if (isExpanded) {
-      tryPlay()
-    }
     return () => {
-      el.pause()
       el.removeEventListener('loadedmetadata', tryPlay as any)
     }
-  }, [isExpanded])
+  }, [isMuted])
 
   return (
     <motion.div
@@ -54,7 +50,7 @@ const ReelCard: React.FC<ReelCardProps> = ({ reel, isExpanded, onHover, onLeave,
       onClick={isMobile ? (isExpanded ? onLeave : onHover) : undefined}
       layout
       transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
-      style={{ width: isMobile ? "90vw" : (isExpanded ? "600px" : "200px"), height: "350px" }}
+      style={{ width: isMobile ? "90vw" : (isExpanded ? "600px" : "200px"), height: isMobile ? "500px" : "350px" }}
     >
       <div className="flex h-full">
         <AnimatePresence mode="wait">
@@ -95,7 +91,20 @@ const ReelCard: React.FC<ReelCardProps> = ({ reel, isExpanded, onHover, onLeave,
                   <span className="flex items-center gap-1"><Heart className="w-4 h-4" />{reel.likes.toLocaleString()}</span>
                   <span className="flex items-center gap-1"><MessageCircle className="w-4 h-4" />{reel.comments.toLocaleString()}</span>
                 </div>
-                <button className="px-4 py-2 bg-white text-black rounded-lg text-sm font-medium hover:bg-gray-200 transition-colors">Watch Now</button>
+                <button 
+                  onClick={() => {
+                    const reelLinks = [
+                      "https://www.instagram.com/reel/DL5QlBCsTK6/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==",
+                      "https://www.instagram.com/reel/DIaUzd4yjpV/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==", 
+                      "https://www.instagram.com/reel/DDMSaE4v2cp/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=="
+                    ];
+                    const reelIndex = ["1", "2", "3"].indexOf(reel.id) >= 0 ? ["1", "2", "3"].indexOf(reel.id) : 0;
+                    window.open(reelLinks[reelIndex], '_blank');
+                  }}
+                  className="px-4 py-2 bg-white text-black rounded-lg text-sm font-medium hover:bg-gray-200 transition-all duration-300 hover:scale-105 active:scale-95"
+                >
+                  Watch Now
+                </button>
               </div>
             </motion.div>
           ) : (
@@ -109,10 +118,12 @@ const ReelCard: React.FC<ReelCardProps> = ({ reel, isExpanded, onHover, onLeave,
               style={{ width: isMobile ? "100%" : "200px" }}
               layout
             >
-              <video ref={videoRef} src={reel.videoUrl} poster={reel.thumbnail} className="w-full h-full object-cover" loop muted={isMuted} playsInline preload="auto" autoPlay />
+              <video ref={videoRef} src={reel.videoUrl} poster={reel.thumbnail} className="w-full h-full object-cover" loop muted={isMuted} playsInline preload="auto" autoPlay style={{ aspectRatio: isMobile ? "9/16" : "auto" }} />
               <button
                 onClick={(e) => { e.stopPropagation(); setIsMuted(!isMuted) }}
-                className="absolute top-4 left-4 bg-black/50 hover:bg-black/70 text-white rounded-full p-2 transition-colors"
+                onMouseDown={(e) => e.stopPropagation()}
+                onTouchStart={(e) => e.stopPropagation()}
+                className="absolute top-4 left-4 bg-black/50 hover:bg-black/70 text-white rounded-full p-2 transition-colors z-10"
               >
                 {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
               </button>
@@ -167,7 +178,20 @@ const ReelCard: React.FC<ReelCardProps> = ({ reel, isExpanded, onHover, onLeave,
                   <span className="flex items-center gap-1"><Heart className="w-4 h-4" />{reel.likes.toLocaleString()}</span>
                   <span className="flex items-center gap-1"><MessageCircle className="w-4 h-4" />{reel.comments.toLocaleString()}</span>
                 </div>
-                <button className="px-4 py-2 bg-white text-black rounded-lg text-sm font-medium hover:bg-gray-200 transition-colors">Watch Now</button>
+                <button 
+                  onClick={() => {
+                    const reelLinks = [
+                      "https://www.instagram.com/reel/DL5QlBCsTK6/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==",
+                      "https://www.instagram.com/reel/DIaUzd4yjpV/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==", 
+                      "https://www.instagram.com/reel/DDMSaE4v2cp/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=="
+                    ];
+                    const reelIndex = ["1", "2", "3"].indexOf(reel.id) >= 0 ? ["1", "2", "3"].indexOf(reel.id) : 0;
+                    window.open(reelLinks[reelIndex], '_blank');
+                  }}
+                  className="px-4 py-2 bg-white text-black rounded-lg text-sm font-medium hover:bg-gray-200 transition-all duration-300 hover:scale-105 active:scale-95"
+                >
+                  Watch Now
+                </button>
               </div>
             </motion.div>
           )}
