@@ -65,13 +65,18 @@ const PinContainer: React.FC<PinContainerProps> = ({
     setTimeout(() => {
       setIsTouched(false);
       setTransform("translate(-50%,-50%) rotateX(0deg) scale(1)");
-    }, 3000);
+    }, 800);
   };
 
-  const handleClick = () => {
-    if (href) {
-      window.open(href, "_blank", "noopener,noreferrer")
+  const handleClick = (e: React.MouseEvent) => {
+    // On mobile, clicking should just reset the card, not navigate
+    if (isMobile) {
+      e.preventDefault();
+      setIsTouched(false);
+      setTransform("translate(-50%,-50%) rotateX(0deg) scale(1)");
+      return;
     }
+    if (href) window.open(href, "_blank", "noopener,noreferrer")
   }
 
   return (
@@ -221,8 +226,8 @@ const PinPerspective: React.FC<PinPerspectiveProps> = ({
 const TeamMemberCard: React.FC<{ member: TeamMember; isMobile: boolean }> = ({ member, isMobile }) => {
   return (
     <div className={cn(
-      "flex flex-col tracking-tight text-slate-100/50 bg-gradient-to-b from-slate-800/50 to-slate-800/0 backdrop-blur-sm border border-slate-700/50 rounded-2xl",
-      isMobile ? "w-[10rem] h-[16rem] p-3" : "w-[16rem] h-[22rem] p-4"
+      "flex flex-col tracking-tight text-slate-100/50 bg-gradient-to-b from-slate-800/50 to-slate-800/0 backdrop-blur-sm border border-slate-700/50 rounded-2xl overflow-hidden",
+      isMobile ? "w-[10rem] h-[16rem] p-2.5" : "w-[16rem] h-[22rem] p-4"
     )}>
       {/* Header with status */}
       <div className="flex items-center justify-between mb-2">
@@ -244,7 +249,7 @@ const TeamMemberCard: React.FC<{ member: TeamMember; isMobile: boolean }> = ({ m
             alt={member.name}
             className={cn(
               "rounded-full object-cover border-2 border-slate-600",
-              isMobile ? "w-10 h-10" : "w-14 h-14"
+              isMobile ? "w-9 h-9" : "w-14 h-14"
             )}
           />
           <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-slate-800 flex items-center justify-center">
@@ -254,20 +259,22 @@ const TeamMemberCard: React.FC<{ member: TeamMember; isMobile: boolean }> = ({ m
       </div>
 
       {/* Name and Role */}
-      <div className="text-center mb-2">
-        <h3 className={cn("font-bold text-slate-100 mb-1", isMobile ? "text-[11px]" : "text-base")}>{member.name}</h3>
-        <p className={cn("text-sky-400 font-medium", isMobile ? "text-[10px]" : "text-xs")}>{member.role}</p>
+      <div className="text-center mb-1.5">
+        <h3 className={cn("font-bold text-slate-100 mb-0.5", isMobile ? "text-[10px]" : "text-base")}>{member.name}</h3>
+        <p className={cn("text-sky-400 font-medium", isMobile ? "text-[9px]" : "text-xs")}>{member.role}</p>
       </div>
 
       {/* Location */}
-      <div className="flex items-center justify-center gap-1 mb-2">
-        <MapPin className="w-3 h-3 text-slate-400" />
-        <span className="text-xs text-slate-400">{member.location}</span>
-      </div>
+      {!isMobile && (
+        <div className="flex items-center justify-center gap-1 mb-2">
+          <MapPin className="w-3 h-3 text-slate-400" />
+          <span className="text-xs text-slate-400">{member.location}</span>
+        </div>
+      )}
 
       {/* Bio */}
       <div className="flex-1 mb-1">
-        <p className={cn("text-slate-300 leading-relaxed line-clamp-3", isMobile ? "text-[9px]" : "text-xs")}> 
+        <p className={cn("text-slate-300 leading-snug line-clamp-4", isMobile ? "text-[8.5px]" : "text-xs")}> 
           {member.bio}
         </p>
       </div>
@@ -276,17 +283,17 @@ const TeamMemberCard: React.FC<{ member: TeamMember; isMobile: boolean }> = ({ m
       <div className="mb-2">
         <h4 className="text-xs text-slate-400 mb-1 uppercase tracking-wide">Skills</h4>
         <div className="flex flex-wrap gap-1">
-          {member.skills.slice(0, isMobile ? 2 : 4).map((skill, index) => (
+          {member.skills.slice(0, isMobile ? 1 : 3).map((skill, index) => (
             <span
               key={index}
-              className="px-1 py-0.5 text-xs bg-slate-700/50 text-slate-300 rounded-full border border-slate-600/50"
+              className={cn("px-1 py-0.5 bg-slate-700/50 text-slate-300 rounded-full border border-slate-600/50", isMobile ? "text-[9px]" : "text-xs")}
             >
               {skill}
             </span>
           ))}
-          {member.skills.length > (isMobile ? 2 : 4) && (
-            <span className="px-1 py-0.5 text-xs bg-slate-700/50 text-slate-400 rounded-full border border-slate-600/50">
-              +{member.skills.length - (isMobile ? 2 : 4)}
+          {member.skills.length > (isMobile ? 1 : 3) && (
+            <span className={cn("px-1 py-0.5 bg-slate-700/50 text-slate-400 rounded-full border border-slate-600/50", isMobile ? "text-[9px]" : "text-xs")}> 
+              +{member.skills.length - (isMobile ? 1 : 3)}
             </span>
           )}
         </div>
