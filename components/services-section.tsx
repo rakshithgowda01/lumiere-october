@@ -642,7 +642,7 @@ export default function ServicesSection() {
             href="https://cal.com" 
             target="_blank" 
             rel="noopener noreferrer"
-            className="bg-transparent border-2 border-white text-white px-8 py-4 rounded-lg font-semibold text-lg transition-colors inline-flex items-center gap-2"
+            className="bg-transparent border-2 border-white text-white px-8 py-4 rounded-lg font-semibold text-lg transition-colors inline-flex items-center gap-2 hover:bg-white hover:text-black"
           >
             <Calendar className="h-5 w-5" />
             Book a Consultation Call

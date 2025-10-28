@@ -7,28 +7,29 @@ const App = () => {
 
   const faqs = [
     {
-      question: "How to use this component?",
+      question: "What does Lumière specialize in?",
       answer:
-        "To use this component, import it and render in your JSX. You can place it inside any section and it will expand/collapse smoothly.",
+        "We are a creative agency focused on cinematic video editing, high-impact social media reels, and end-to-end brand storytelling that drives measurable growth.",
     },
     {
-      question: "Are there any other components available?",
+      question: "What industries do you work with?",
       answer:
-        "Yes, browse the Components section of the library for more building blocks.",
+        "We partner with consumer brands, startups, creators, and agencies across fashion, tech, F&B, fitness, and more—anyone who values compelling visual storytelling.",
     },
     {
-      question: "Are components responsive?",
-      answer: "Yes, all components are responsive and work across screen sizes.",
+      question: "How does your process work?",
+      answer:
+        "Discovery → Strategy → Production → Editing → Revisions → Delivery. We align on goals early, then execute fast with clear checkpoints and feedback loops.",
     },
     {
-      question: "Can I customize the components?",
+      question: "How soon can we start and what are timelines?",
       answer:
-        "Absolutely. Pass props, override classes, or compose with your own layout.",
+        "Discovery calls are available within 48 hours. Typical reel edits take 2–5 days; full campaigns vary based on scope. Rush timelines are available on request.",
     },
     {
-      question: "Do you support dark mode?",
+      question: "What is pricing like?",
       answer:
-        "The styles are Tailwind-based and inherit your theme tokens, so dark mode works out of the box.",
+        "Project-based or monthly retainers depending on deliverables. After the consultation, we share a transparent proposal with scope, timeline, and pricing options.",
     },
   ]
 

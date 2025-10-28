@@ -15,6 +15,7 @@ interface TeamMember {
   skills: string[];
   rating: number;
   location: string;
+  instagramUrl?: string;
 }
 
 interface PinContainerProps {
@@ -67,6 +68,12 @@ const PinContainer: React.FC<PinContainerProps> = ({
     }, 3000);
   };
 
+  const handleClick = () => {
+    if (href) {
+      window.open(href, "_blank", "noopener,noreferrer")
+    }
+  }
+
   return (
     <div
       className={cn(
@@ -78,6 +85,7 @@ const PinContainer: React.FC<PinContainerProps> = ({
       onTouchStart={onTouchStart}
       onTouchEnd={onTouchEnd}
       onTouchMove={onTouchStart}
+      onClick={handleClick}
     >
       <div
         style={{
@@ -214,7 +222,7 @@ const TeamMemberCard: React.FC<{ member: TeamMember; isMobile: boolean }> = ({ m
   return (
     <div className={cn(
       "flex flex-col tracking-tight text-slate-100/50 bg-gradient-to-b from-slate-800/50 to-slate-800/0 backdrop-blur-sm border border-slate-700/50 rounded-2xl",
-      isMobile ? "w-[14rem] h-[22rem] p-3" : "w-[24rem] h-[32rem] p-6"
+      isMobile ? "w-[10rem] h-[16rem] p-3" : "w-[16rem] h-[22rem] p-4"
     )}>
       {/* Header with status */}
       <div className="flex items-center justify-between mb-2">
@@ -236,7 +244,7 @@ const TeamMemberCard: React.FC<{ member: TeamMember; isMobile: boolean }> = ({ m
             alt={member.name}
             className={cn(
               "rounded-full object-cover border-2 border-slate-600",
-              isMobile ? "w-12 h-12" : "w-20 h-20"
+              isMobile ? "w-10 h-10" : "w-14 h-14"
             )}
           />
           <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-slate-800 flex items-center justify-center">
@@ -247,8 +255,8 @@ const TeamMemberCard: React.FC<{ member: TeamMember; isMobile: boolean }> = ({ m
 
       {/* Name and Role */}
       <div className="text-center mb-2">
-        <h3 className={cn("font-bold text-slate-100 mb-1", isMobile ? "text-sm" : "text-xl")}>{member.name}</h3>
-        <p className={cn("text-sky-400 font-medium", isMobile ? "text-xs" : "text-sm")}>{member.role}</p>
+        <h3 className={cn("font-bold text-slate-100 mb-1", isMobile ? "text-[11px]" : "text-base")}>{member.name}</h3>
+        <p className={cn("text-sky-400 font-medium", isMobile ? "text-[10px]" : "text-xs")}>{member.role}</p>
       </div>
 
       {/* Location */}
@@ -258,8 +266,8 @@ const TeamMemberCard: React.FC<{ member: TeamMember; isMobile: boolean }> = ({ m
       </div>
 
       {/* Bio */}
-      <div className="flex-1 mb-2">
-        <p className={cn("text-slate-300 leading-relaxed line-clamp-2", isMobile ? "text-xs" : "text-sm")}>
+      <div className="flex-1 mb-1">
+        <p className={cn("text-slate-300 leading-relaxed line-clamp-3", isMobile ? "text-[9px]" : "text-xs")}> 
           {member.bio}
         </p>
       </div>
@@ -284,15 +292,7 @@ const TeamMemberCard: React.FC<{ member: TeamMember; isMobile: boolean }> = ({ m
         </div>
       </div>
 
-      {/* Footer */}
-      <div className="flex justify-between items-center">
-        <div className="text-xs text-slate-400">
-          {isMobile ? "Active" : "Last active: 2 hours ago"}
-        </div>
-        <div className="text-emerald-400 text-xs font-medium">
-          View →
-        </div>
-      </div>
+      {/* Footer removed as requested */}
     </div>
   );
 };
@@ -306,53 +306,36 @@ const TeamCarousel: React.FC = () => {
   const teamMembers: TeamMember[] = [
     {
       id: "1",
-    name: "Alex Rivera",
-    role: "Creative Director",
-      image: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face",
-    bio: "With over 8 years in video production, Alex leads our creative vision and ensures every project tells a compelling story.",
-      skills: ["Creative Direction", "Storytelling", "Brand Strategy", "Video Production"],
-      rating: 4.9,
-      location: "San Francisco, CA"
+      name: "Nohil Yash Arthur",
+      role: "Founding Partner, Creative Director",
+      image: "/placeholder-user.jpg",
+      bio: "Always on the edge to turn raw elements into something beautiful with the means of art. Bringing unconventional yet market relevant ideas to life, ultimately redefining brands.",
+      skills: ["Creative Direction", "Brand Strategy", "Concept Development", "Storytelling"],
+      rating: 5.0,
+      location: "Bengaluru, IN",
+      instagramUrl: "https://instagram.com/"
     },
     {
       id: "2",
-    name: "Sam Chen",
-    role: "Lead Editor",
-      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face",
-    bio: "Sam brings technical expertise and artistic flair to every edit, specializing in color grading and motion graphics.",
-      skills: ["Video Editing", "Color Grading", "Motion Graphics", "Post Production"],
-      rating: 4.8,
-      location: "Austin, TX"
+      name: "Hruthik. G",
+      role: "Founding Partner, Director of Photography",
+      image: "/placeholder-user.jpg",
+      bio: "With a keen eye towards capturing the essence of a moment and the need to delegate and manage a high performance system. I let the best of both worlds intertwine, as a result brands are met with unwavering direction and high quality shots that replicate what was once an idea, now a film ready to show the world your brand’s story.",
+      skills: ["Cinematography", "Lighting", "Camera Operation", "Production Leadership"],
+      rating: 5.0,
+      location: "Bengaluru, IN",
+      instagramUrl: "https://instagram.com/"
     },
     {
       id: "3",
-    name: "Jordan Taylor",
-    role: "Social Media Specialist",
-      image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face",
-    bio: "Jordan creates viral-worthy content and understands the nuances of each social platform to maximize engagement.",
-      skills: ["Social Media", "Content Strategy", "Trend Analysis", "Community Management"],
-      rating: 4.9,
-      location: "New York, NY"
-    },
-    {
-      id: "4",
-    name: "Casey Morgan",
-    role: "Producer",
-      image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face",
-    bio: "Casey manages project timelines and client relationships, ensuring smooth production from concept to delivery.",
-      skills: ["Project Management", "Client Relations", "Production Planning", "Budget Management"],
-      rating: 4.7,
-      location: "Seattle, WA"
-    },
-    {
-      id: "5",
-      name: "Lisa Thompson",
-      role: "Content Strategist",
-      image: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=150&h=150&fit=crop&crop=face",
-      bio: "Strategic content leader with a track record of creating engaging video content that drives business results.",
-      skills: ["Content Strategy", "Analytics", "Brand Development", "Campaign Planning"],
-      rating: 4.8,
-      location: "Boston, MA"
+      name: "Mayank V.N",
+      role: "Founding Partner, Financial Director",
+      image: "/placeholder-user.jpg",
+      bio: "What is brought to the table, I multiply. With firm commitment and sheer belief towards the growth of this company. Mayank uses his expertise in the world of finance to take calculated steps and decisions that are bound to take our ‘Lumière’ above and beyond.",
+      skills: ["Financial Strategy", "Budgeting", "Operations", "Risk Management"],
+      rating: 5.0,
+      location: "Bengaluru, IN",
+      instagramUrl: "https://instagram.com/"
     }
   ];
 
@@ -432,7 +415,7 @@ const TeamCarousel: React.FC = () => {
           <div className="flex justify-center">
             <PinContainer
               title={`Connect with ${teamMembers[currentIndex].name}`}
-              href="#"
+              href={teamMembers[currentIndex].instagramUrl}
               className="w-full"
             >
               <TeamMemberCard member={teamMembers[currentIndex]} isMobile={isMobile} />

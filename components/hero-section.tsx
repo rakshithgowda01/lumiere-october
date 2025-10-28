@@ -9,13 +9,18 @@ export default function HeroSection() {
   const [scrollY, setScrollY] = useState(0)
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrollY(window.scrollY)
+    let rafId = 0
+    const onScroll = () => {
+      if (rafId) return
+      rafId = window.requestAnimationFrame(() => {
+        setScrollY(window.scrollY)
+        rafId = 0
+      })
     }
-    window.addEventListener("scroll", handleScroll)
-
+    window.addEventListener("scroll", onScroll, { passive: true })
     return () => {
-      window.removeEventListener("scroll", handleScroll)
+      window.removeEventListener("scroll", onScroll)
+      if (rafId) window.cancelAnimationFrame(rafId)
     }
   }, [])
 
@@ -32,10 +37,11 @@ export default function HeroSection() {
       <div
         className="text-center z-10 px-6"
         style={{
-          transform: isMobile ? undefined : `translateY(${scrollY * 0.1}px)`,
+          transform: isMobile ? undefined : `translate3d(0, ${scrollY * 0.1}px, 0)`,
+          willChange: isMobile ? undefined : "transform",
         }}
       >
-        <div style={{ position: "relative", height: isMobile ? "120px" : "160px" }} className="mb-6 md:mb-8 md:h-[220px]">
+        <div style={{ position: "relative", height: isMobile ? "180px" : "260px" }} className="mb-3 md:mb-4">
           <TextPressure
             text={"LUMIÈRE!"}
             flex={true}
@@ -46,24 +52,26 @@ export default function HeroSection() {
             italic={true}
             textColor="#ffffff"
             strokeColor="#ff0000"
-            minFontSize={36}
+            minFontSize={isMobile ? 56 : 104}
             className=""
           />
         </div>
 
         <h2
-          className="text-lg md:text-3xl lg:text-4xl text-white mb-4 md:mb-6 font-light"
+          className="text-lg md:text-3xl lg:text-4xl text-white mb-2 md:mb-4 font-light"
           style={{
-            transform: isMobile ? undefined : `translateY(${scrollY * 0.15}px)`,
+            transform: isMobile ? undefined : `translate3d(0, ${scrollY * 0.15}px, 0)`,
+            willChange: isMobile ? undefined : "transform",
           }}
         >
           We turn stories into scroll stopping content
         </h2>
 
         <p
-          className="text-sm md:text-xl text-gray-400 mb-8 md:mb-12 max-w-3xl mx-auto leading-relaxed"
+          className="text-sm md:text-xl text-gray-400 mb-6 md:mb-8 max-w-3xl mx-auto leading-relaxed"
           style={{
-            transform: isMobile ? undefined : `translateY(${scrollY * 0.2}px)`,
+            transform: isMobile ? undefined : `translate3d(0, ${scrollY * 0.2}px, 0)`,
+            willChange: isMobile ? undefined : "transform",
           }}
         >
           Cinematic video editing, viral Instagram reels, and brand storytelling
@@ -73,7 +81,8 @@ export default function HeroSection() {
 
         <div
           style={{
-            transform: isMobile ? undefined : `translateY(${scrollY * 0.05}px)`,
+            transform: isMobile ? undefined : `translate3d(0, ${scrollY * 0.05}px, 0)`,
+            willChange: isMobile ? undefined : "transform",
           }}
         >
           <Magnet strength={0.2}>
