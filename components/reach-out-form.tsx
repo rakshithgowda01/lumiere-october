@@ -109,27 +109,21 @@ export default function ReachOutForm() {
           <span className="text-gray-400 text-sm mr-3 font-mono">Our Team:</span>
           <div className="flex -space-x-2">
             <div className="relative group">
-              <img className="w-8 h-8 rounded-full border-2 border-gray-800 hover:border-white transition-all duration-300 cursor-pointer" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.0.3" alt="Alex Chen" />
+              <img className="w-8 h-8 rounded-full border-2 border-gray-800 hover:border-white transition-all duration-300 cursor-pointer" src="/team-member-1.heic" alt="Nohil Yash Arthur" onError={(e) => { const target = e.target as HTMLImageElement; if (target.src.endsWith('.heic')) { target.src = '/team-member-1.jpg'; } else if (target.src.endsWith('.jpg')) { target.src = '/team-member-1.png'; } }} />
               <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-white text-black text-xs font-mono rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
-                Alex Chen
+                Nohil Yash Arthur
               </div>
             </div>
             <div className="relative group">
-              <img className="w-8 h-8 rounded-full border-2 border-gray-800 hover:border-white transition-all duration-300 cursor-pointer" src="https://images.unsplash.com/photo-1494790108755-2616b612b786?q=80&w=3387&auto=format&fit=crop&ixlib=rb-4.0.3" alt="Sarah Kim" />
+              <img className="w-8 h-8 rounded-full border-2 border-gray-800 hover:border-white transition-all duration-300 cursor-pointer" src="/team-member-2.heic" alt="Hruthik. G" onError={(e) => { const target = e.target as HTMLImageElement; if (target.src.endsWith('.heic')) { target.src = '/team-member-2.jpg'; } else if (target.src.endsWith('.jpg')) { target.src = '/team-member-2.png'; } }} />
               <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-white text-black text-xs font-mono rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
-                Sarah Kim
+                Hruthik. G
               </div>
             </div>
             <div className="relative group">
-              <img className="w-8 h-8 rounded-full border-2 border-gray-800 hover:border-white transition-all duration-300 cursor-pointer" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=3387&auto=format&fit=crop&ixlib=rb-4.0.3" alt="Marcus Johnson" />
+              <img className="w-8 h-8 rounded-full border-2 border-gray-800 hover:border-white transition-all duration-300 cursor-pointer" src="/team-member-3.heic" alt="Mayank V.N" onError={(e) => { const target = e.target as HTMLImageElement; if (target.src.endsWith('.heic')) { target.src = '/team-member-3.jpg'; } else if (target.src.endsWith('.jpg')) { target.src = '/team-member-3.png'; } }} />
               <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-white text-black text-xs font-mono rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
-                Marcus Johnson
-              </div>
-            </div>
-            <div className="relative group">
-              <img className="w-8 h-8 rounded-full border-2 border-gray-800 hover:border-white transition-all duration-300 cursor-pointer" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.0.3" alt="Lisa Zhang" />
-              <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-white text-black text-xs font-mono rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
-                Lisa Zhang
+                Mayank V.N
               </div>
             </div>
           </div>

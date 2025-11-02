@@ -1,140 +1,16 @@
 "use client"
 
-import type React from "react"
-import { useState } from "react"
-import { ContainerScroll } from "@/components/ui/container-scroll-animation"
-import { BentoGrid, BentoGridItem } from "@/components/ui/bento-grid"
-import { AnimatedTestimonials } from "@/components/ui/animated-testimonials"
-import { AnimatedTooltip } from "@/components/ui/animated-tooltip"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { Instagram, Youtube, Mail, User, MessageSquare } from "lucide-react"
+import { motion } from "framer-motion"
+import { Instagram, Mail, MessageSquare } from "lucide-react"
+import { TestimonialsSection } from "@/components/ui/testimonials-with-marquee"
 
 export default function ContactSection() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: "",
-  })
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    console.log("Form submitted:", formData)
-  }
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    })
-  }
-
-  const testimonials = [
-    {
-      quote:
-        "Working with Lumiere transformed our brand's visual storytelling. Their attention to detail and creative vision exceeded all expectations.",
-      name: "Sarah Chen",
-      designation: "Creative Director at Nexus Studios",
-      src: "https://images.unsplash.com/photo-1494790108755-2616b612b786?q=80&w=3387&auto=format&fit=crop&ixlib=rb-4.0.3",
-    },
-    {
-      quote:
-        "The cinematic quality and emotional depth they brought to our project was remarkable. Truly exceptional work.",
-      name: "Michael Rodriguez",
-      designation: "Producer at Visionary Films",
-      src: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=3387&auto=format&fit=crop&ixlib=rb-4.0.3",
-    },
-    {
-      quote: "Professional, creative, and delivered beyond our timeline. The final product speaks for itself.",
-      name: "Emily Watson",
-      designation: "Marketing Lead at Creative Co.",
-      src: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.0.3",
-    },
-  ]
-
-  const teamMembers = [
-    {
-      id: 1,
-      name: "Alex Chen",
-      designation: "Creative Director",
-      image:
-        "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.0.3",
-    },
-    {
-      id: 2,
-      name: "Sarah Kim",
-      designation: "Lead Editor",
-      image:
-        "https://images.unsplash.com/photo-1494790108755-2616b612b786?q=80&w=3387&auto=format&fit=crop&ixlib=rb-4.0.3",
-    },
-    {
-      id: 3,
-      name: "Marcus Johnson",
-      designation: "Cinematographer",
-      image:
-        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=3387&auto=format&fit=crop&ixlib=rb-4.0.3",
-    },
-    {
-      id: 4,
-      name: "Lisa Zhang",
-      designation: "Motion Designer",
-      image:
-        "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.0.3",
-    },
-  ]
-
-  const ProjectForm = () => (
-    <div className="h-full flex flex-col bg-black p-6 rounded-lg border border-gray-800 text-white">
-      <form onSubmit={handleSubmit} className="space-y-4 h-full flex flex-col">
-        <div className="grid grid-cols-1 gap-4">
-          <Input
-            type="text"
-            name="name"
-            placeholder="Your Name"
-            value={formData.name}
-            onChange={handleChange}
-            className="bg-gray-900 border-gray-600 text-white placeholder:text-gray-400 font-mono"
-            required
-          />
-          <Input
-            type="email"
-            name="email"
-            placeholder="Your Email"
-            value={formData.email}
-            onChange={handleChange}
-            className="bg-gray-900 border-gray-600 text-white placeholder:text-gray-400 font-mono"
-            required
-          />
-        </div>
-        <Textarea
-          name="message"
-          placeholder="Tell us about your project..."
-          value={formData.message}
-          onChange={handleChange}
-          rows={6}
-          className="bg-gray-900 border-gray-600 text-white placeholder:text-gray-400 resize-none flex-1 font-mono"
-          required
-        />
-        <div className="flex flex-col gap-4 mt-auto">
-          <Button type="submit" className="w-full bg-white text-black hover:bg-gray-200 font-mono transition-all duration-300 hover:scale-105 active:scale-95">
-            Send Message
-          </Button>
-          <div className="flex items-center justify-center">
-            <span className="text-gray-400 text-sm mr-3 font-mono">Our Team:</span>
-            <AnimatedTooltip items={teamMembers} />
-          </div>
-        </div>
-      </form>
-    </div>
-  )
-
   const ConnectWithUs = () => (
-    <div className="bg-black p-6 rounded-lg border border-gray-800 h-full flex flex-col text-white">
+    <div className="bg-black/40 backdrop-blur-sm p-6 rounded-lg border border-white/10 h-full flex flex-col text-white">
       <div className="flex flex-col h-full overflow-hidden">
         <h3 className="text-white font-semibold mb-4 text-lg font-mono">Connect With Us</h3>
         <div className="text-gray-300 text-sm mb-4 leading-relaxed space-y-1 font-mono">
-          <p>Email: <a href="mailto:lumiere.elevated@gmail.com" className="underline text-white">lumiere.elevated@gmail.com</a></p>
+          <p>Email: <a href="mailto:lumiere.elevated@gmail.com" className="underline text-white hover:text-gray-300 transition-colors">lumiere.elevated@gmail.com</a></p>
         </div>
 
         <div className="flex gap-4 justify-center mb-6">
@@ -187,40 +63,73 @@ export default function ContactSection() {
     </div>
   )
 
-  return (
-    <section id="contact" className="py-20">
-      <ContainerScroll
-        titleComponent={
-          <>
-            <h1 className="text-4xl md:text-6xl font-mono font-bold text-white mb-4">
-              Let's Create <br />
-              <span className="text-4xl md:text-[6rem] font-mono font-bold mt-1 leading-none text-white">
-                Together
-              </span>
-            </h1>
-          </>
-        }
-      >
-        <div className="w-full h-[120vh] overflow-y-auto scrollbar-thin scrollbar-track-gray-900 scrollbar-thumb-gray-600 bg-black">
-          <div className="p-8 max-w-7xl mx-auto text-white">
-            <div className="max-w-2xl mx-auto mb-8">
-              <BentoGridItem
-                title="Connect With Us"
-                description="Follow our journey and stay updated with our latest work."
-                header={<ConnectWithUs />}
-                icon={<MessageSquare className="h-4 w-4 text-neutral-500" />}
-                className="bg-black border-gray-800 w-full"
-              />
-            </div>
+  const testimonials = [
+    {
+      author: {
+        name: "Sarah Chen",
+        handle: "@nexusstudios",
+        avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b786?q=80&w=3387&auto=format&fit=crop&ixlib=rb-4.0.3"
+      },
+      text: "Working with Lumiere transformed our brand's visual storytelling. Their attention to detail and creative vision exceeded all expectations.",
+    },
+    {
+      author: {
+        name: "Michael Rodriguez",
+        handle: "@visionaryfilms",
+        avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=3387&auto=format&fit=crop&ixlib=rb-4.0.3"
+      },
+      text: "The cinematic quality and emotional depth they brought to our project was remarkable. Truly exceptional work.",
+    },
+    {
+      author: {
+        name: "Emily Watson",
+        handle: "@creativeco",
+        avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.0.3"
+      },
+      text: "Professional, creative, and delivered beyond our timeline. The final product speaks for itself.",
+    },
+  ]
 
-            {/* Testimonials Section */}
-            <div className="mt-8 bg-black border border-gray-800 rounded-lg p-8">
-              <h3 className="text-2xl font-semibold text-white mb-6 text-center font-mono">What Our Clients Say</h3>
-              <AnimatedTestimonials testimonials={testimonials} autoplay={true} />
-            </div>
-          </div>
-        </div>
-      </ContainerScroll>
+  return (
+    <section id="contact" className="py-20 px-4 md:px-6">
+      <div className="max-w-7xl mx-auto">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="text-center mb-16"
+        >
+          <h1 className="text-4xl md:text-6xl font-mono font-bold text-white mb-4">
+            Let's Create <br />
+            <span className="text-4xl md:text-[6rem] font-mono font-bold mt-1 leading-none text-white">
+              Together
+            </span>
+          </h1>
+          <p className="text-gray-400 text-lg font-mono max-w-2xl mx-auto">
+            Ready to bring your vision to life? Let's discuss your project and create something amazing together.
+          </p>
+        </motion.div>
+
+        {/* Connect With Us Card */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+          className="max-w-2xl mx-auto mb-20"
+        >
+          <ConnectWithUs />
+        </motion.div>
+
+        {/* Testimonials Marquee */}
+        <TestimonialsSection
+          title="What Our Clients Say"
+          description="Join brands who trust Lumiere to bring their vision to life"
+          testimonials={testimonials}
+        />
+      </div>
     </section>
   )
 }

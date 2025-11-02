@@ -99,7 +99,6 @@ export const GalleryShowcase: React.FC<GalleryShowcaseProps> = ({
   const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null)
   const [modalCurrentIndex, setModalCurrentIndex] = useState(0)
   const [modalIsPlaying, setModalIsPlaying] = useState(true)
-  const [showTitle, setShowTitle] = useState(false)
   const modalIntervalRef = useRef<number | null>(null)
 
   const extendedPhotos = [...photos, ...photos, ...photos]
@@ -124,13 +123,10 @@ export const GalleryShowcase: React.FC<GalleryShowcaseProps> = ({
   const openModal = (photo: Photo) => {
     setSelectedPhoto(photo)
     setModalCurrentIndex(photos.findIndex((p) => p.id === photo.id))
-    setShowTitle(false)
-    setTimeout(() => setShowTitle(true), 500)
   }
 
   const closeModal = () => {
     setSelectedPhoto(null)
-    setShowTitle(false)
   }
 
   const nextPhoto = () => setModalCurrentIndex((prev) => (prev + 1) % photos.length)
@@ -157,10 +153,6 @@ export const GalleryShowcase: React.FC<GalleryShowcaseProps> = ({
                 className="w-full h-full object-cover rounded-lg"
                 motionProps={{ whileHover: { scale: 1.05 }, transition: { duration: 0.3 } }}
               />
-              <div className="absolute bottom-6 left-6 text-white z-10">
-                <h3 className="text-lg md:text-xl font-semibold drop-shadow-lg">{photo.title}</h3>
-                <p className="text-sm opacity-80 drop-shadow-lg">{photo.description}</p>
-              </div>
             </div>
           ))}
         </motion.div>
@@ -171,14 +163,7 @@ export const GalleryShowcase: React.FC<GalleryShowcaseProps> = ({
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm" onClick={closeModal}>
             <div className="flex items-center justify-center min-h-screen p-4">
               <motion.div initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.8, opacity: 0 }} className="bg-gray-900 rounded-lg shadow-2xl w-auto max-h-[90vh] overflow-hidden max-w-[95vw]" onClick={(e) => e.stopPropagation()}>
-                <div className="flex justify-between items-center p-4 border-b border-gray-700">
-                  <AnimatePresence>
-                    {showTitle && (
-                      <motion.h2 initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="text-xl md:text-2xl font-bold text-white">
-                        {photos[modalCurrentIndex]?.title}
-                      </motion.h2>
-                    )}
-                  </AnimatePresence>
+                <div className="flex justify-end items-center p-4 border-b border-gray-700">
                   <Button variant="ghost" size="sm" onClick={closeModal} className="text-gray-400 hover:text-white">
                     <X className="h-5 w-5" />
                   </Button>

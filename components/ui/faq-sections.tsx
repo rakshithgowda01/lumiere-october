@@ -42,7 +42,7 @@ const App = () => {
       <div className="faq-poppins max-w-4xl mx-auto flex flex-col md:flex-row items-start justify-center gap-8 px-4 md:px-0">
         <img
           className="max-w-sm w-full rounded-xl h-auto"
-          src="https://images.unsplash.com/photo-1555212697-194d092e3b8f?q=80&w=830&h=844&auto=format&fit=crop"
+          src="/faq-photo.jpg"
           alt="FAQ Illustration"
         />
         <div>
