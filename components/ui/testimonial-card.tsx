@@ -28,28 +28,30 @@ export function TestimonialCard({
       className={cn(
         "flex flex-col rounded-lg border-t",
         "bg-gradient-to-b from-muted/50 to-muted/10",
-        "p-4 text-start sm:p-6",
+        "p-5 text-start sm:p-6",
         "hover:from-muted/60 hover:to-muted/20",
-        "max-w-[320px] sm:max-w-[320px]",
+        "w-[350px] sm:w-[380px]",
+        "min-h-[200px] sm:min-h-[220px]",
         "transition-colors duration-300",
         "border-white/10 bg-black/40 backdrop-blur-sm",
+        "flex-shrink-0",
         className
       )}
     >
-      <div className="flex items-center gap-3">
-        <Avatar className="h-12 w-12">
-          <AvatarImage src={author.avatar} alt={author.name} />
+      <div className="flex items-center gap-3 mb-4">
+        <Avatar className="h-12 w-12 flex-shrink-0">
+          <AvatarImage src={author.avatar} alt={author.name} className="object-cover" />
         </Avatar>
-        <div className="flex flex-col items-start">
-          <h3 className="text-md font-semibold leading-none text-white">
+        <div className="flex flex-col items-start min-w-0">
+          <h3 className="text-base font-semibold leading-tight text-white truncate w-full">
             {author.name}
           </h3>
-          <p className="text-sm text-gray-400">
+          <p className="text-sm text-gray-400 truncate w-full">
             {author.handle}
           </p>
         </div>
       </div>
-      <p className="sm:text-md mt-4 text-sm text-gray-300 leading-relaxed">
+      <p className="text-sm sm:text-base text-gray-300 leading-relaxed mt-2 line-clamp-none">
         {text}
       </p>
     </Card>
