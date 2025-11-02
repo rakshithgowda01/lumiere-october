@@ -143,7 +143,12 @@
     max-width: 100%;
     overflow-x: hidden;
     overscroll-behavior-x: none;
+    overscroll-behavior-y: auto;
     touch-action: pan-y;
+    /* Smooth scrolling */
+    scroll-behavior: smooth;
+    /* Improve scroll performance */
+    -webkit-overflow-scrolling: touch;
   }
   body {
     @apply bg-background text-foreground;
@@ -154,7 +159,11 @@
     width: 100%;
     max-width: 100%;
     overscroll-behavior-x: none;
+    overscroll-behavior-y: auto;
     touch-action: pan-y;
+    /* Improve scroll performance */
+    -webkit-overflow-scrolling: touch;
+    will-change: scroll-position;
   }
 }
 
@@ -323,6 +332,20 @@
   transform: scale(1.5);
 }
 
+/* Blink animation for typewriter cursor */
+@keyframes blink {
+  0%, 50% {
+    opacity: 1;
+  }
+  51%, 100% {
+    opacity: 0;
+  }
+}
+
+.animate-blink {
+  animation: blink 1s infinite;
+}
+
 /* Custom opacity values */
 .opacity-70 {
   opacity: 0.7;
@@ -330,6 +353,34 @@
 
 .opacity-50 {
   opacity: 0.5;
+}
+
+/* Ensure sections stack properly and don't overlap */
+main > section,
+main > div[class*="section"],
+main > section[id] {
+  position: relative;
+  z-index: 1;
+  isolation: isolate;
+}
+
+/* Prevent content overflow issues */
+section {
+  position: relative;
+  overflow: visible;
+}
+
+/* Performance optimizations for scroll */
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* GPU acceleration for better scroll performance - applied via class */
+.gpu-accelerated {
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  will-change: transform;
 }
 
 /* Custom border opacity */

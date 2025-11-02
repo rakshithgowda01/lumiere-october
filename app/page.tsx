@@ -87,51 +87,38 @@ export default function Home() {
     }
   })
   return (
-    <main className="min-h-screen">
+    <main className="min-h-screen relative z-0">
       <Navbar />
         <HeroSection />
       <div className="w-full h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
 
-      <ScrollParallax>
-        <AboutSection />
-      </ScrollParallax>
+      {/* About Lumière Section */}
+      <AboutSection />
       <div className="w-full h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
 
-      <ScrollParallax>
       <ServicesSection />
-      </ScrollParallax>
       <div className="w-full h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
 
-      <ScrollParallax>
-        <ReelsSection />
-      </ScrollParallax>
+      <ReelsSection />
       <div className="w-full h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
 
-      <ScrollParallax>
-        <section id="gallery" className="py-12">
-          <div className="max-w-7xl mx-auto px-4">
-            <div className="text-center mb-8">
-              <h2 className="text-4xl md:text-5xl font-bold text-white font-mono">Gallery Showcase</h2>
-            </div>
-            <GalleryShowcase photos={galleryPhotos} />
+      <section id="gallery" className="py-12 relative z-10">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="text-center mb-8">
+            <h2 className="text-4xl md:text-5xl font-bold text-white font-mono">Gallery Showcase</h2>
           </div>
-        </section>
-      </ScrollParallax>
+          <GalleryShowcase photos={galleryPhotos} />
+        </div>
+      </section>
       <div className="w-full h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
 
-      <ScrollParallax>
-        <WorkSection />
-      </ScrollParallax>
+      <WorkSection />
       <div className="w-full h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
 
-      <ScrollParallax>
-        <TeamSection />
-      </ScrollParallax>
+      <TeamSection />
       <div className="w-full h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
 
-      <ScrollParallax>
-        <ContactSection />
-      </ScrollParallax>
+      <ContactSection />
 
       <div className="w-full h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
 
@@ -176,9 +163,7 @@ export default function Home() {
         </div>
       </section>
 
-      <ScrollParallax>
-        <FooterSection />
-      </ScrollParallax>
+      <FooterSection />
     </main>
   )
 }

@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion"
 import { Instagram, Mail, MessageSquare } from "lucide-react"
-import { TestimonialsSection } from "@/components/ui/testimonials-with-marquee"
+import { Component as TypewriterTestimonial } from "@/components/ui/typewriter-testimonial"
 
 export default function ContactSection() {
   const ConnectWithUs = () => (
@@ -41,19 +41,19 @@ export default function ContactSection() {
         <div className="space-y-3 mt-auto">
           <div className="flex items-center gap-3">
             <div className="w-2 h-2 bg-purple-400 rounded-full flex-shrink-0"></div>
-            <span className="text-white text-sm font-medium font-mono">Free Consultation</span>
-          </div>
-          <div className="flex items-center gap-3">
-            <div className="w-2 h-2 bg-purple-400 rounded-full flex-shrink-0"></div>
             <span className="text-white text-sm font-medium font-mono">Custom Solutions</span>
           </div>
           <div className="flex items-center gap-3">
             <div className="w-2 h-2 bg-purple-400 rounded-full flex-shrink-0"></div>
-            <span className="text-white text-sm font-medium font-mono">24/7 Support</span>
+            <span className="text-white text-sm font-medium font-mono">Fast Delivery</span>
           </div>
           <div className="flex items-center gap-3">
             <div className="w-2 h-2 bg-purple-400 rounded-full flex-shrink-0"></div>
-            <span className="text-white text-sm font-medium font-mono">Fast Delivery</span>
+            <span className="text-white text-sm font-medium font-mono">Quality Assurance</span>
+          </div>
+          <div className="flex items-center gap-3">
+            <div className="w-2 h-2 bg-purple-400 rounded-full flex-shrink-0"></div>
+            <span className="text-white text-sm font-medium font-mono">Creative Excellence</span>
           </div>
           <div className="text-gray-300 text-sm mt-4 leading-relaxed font-mono">
             <p>Contact: <span className="font-medium text-white">9901584053, 9901584693, 9902066873</span></p>
@@ -65,28 +65,39 @@ export default function ContactSection() {
 
   const testimonials = [
     {
-      author: {
-        name: "Sarah Chen",
-        handle: "@nexusstudios",
-        avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b786?q=80&w=3387&auto=format&fit=crop&ixlib=rb-4.0.3"
-      },
-      text: "Working with Lumiere transformed our brand's visual storytelling. Their attention to detail and creative vision exceeded all expectations.",
+      image: '/placeholder-user.jpg', // Replace with your image path
+      audio: 'audio_1.mp3',
+      text: 'Working with Lumiere transformed our brand\'s visual storytelling. Their attention to detail and creative vision exceeded all expectations.',
+      name: 'Sarah Chen',
+      jobtitle: 'Marketing Manager',
     },
     {
-      author: {
-        name: "Michael Rodriguez",
-        handle: "@visionaryfilms",
-        avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=3387&auto=format&fit=crop&ixlib=rb-4.0.3"
-      },
-      text: "The cinematic quality and emotional depth they brought to our project was remarkable. Truly exceptional work.",
+      image: '/placeholder-user.jpg', // Replace with your image path
+      audio: 'audio_2.mp3',
+      text: 'The cinematic quality and emotional depth they brought to our project was remarkable. Truly exceptional work.',
+      name: 'Michael Rodriguez',
+      jobtitle: 'Creative Director',
     },
     {
-      author: {
-        name: "Emily Watson",
-        handle: "@creativeco",
-        avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.0.3"
-      },
-      text: "Professional, creative, and delivered beyond our timeline. The final product speaks for itself.",
+      image: '/placeholder-user.jpg', // Replace with your image path
+      audio: 'audio_3.mp3',
+      text: 'Professional, creative, and delivered beyond our timeline. The final product speaks for itself.',
+      name: 'Emily Watson',
+      jobtitle: 'Brand Manager',
+    },
+    {
+      image: '/placeholder-user.jpg', // Replace with your image path
+      audio: 'audio_4.mp3',
+      text: 'This product has revolutionized my workflow. The intuitive interface and powerful features make it an indispensable tool for my daily tasks.',
+      name: 'John Doe',
+      jobtitle: 'Software Engineer',
+    },
+    {
+      image: '/placeholder-user.jpg', // Replace with your image path
+      audio: 'audio_5.mp3',
+      text: 'An exceptional experience from start to finish. The customer support is top-notch, and the product consistently exceeds my expectations.',
+      name: 'Jane Smith',
+      jobtitle: 'Project Manager',
     },
   ]
 
@@ -123,12 +134,26 @@ export default function ContactSection() {
           <ConnectWithUs />
         </motion.div>
 
-        {/* Testimonials Marquee */}
-        <TestimonialsSection
-          title="What Our Clients Say"
-          description="Join brands who trust Lumiere to bring their vision to life"
-          testimonials={testimonials}
-        />
+        {/* Testimonials Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="mt-20"
+        >
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-mono font-bold text-white mb-4">
+              What Our Clients Say
+            </h2>
+            <p className="text-gray-400 text-lg font-mono">
+              Join brands who trust Lumiere to bring their vision to life
+            </p>
+          </div>
+          <div className="flex justify-center">
+            <TypewriterTestimonial testimonials={testimonials} />
+          </div>
+        </motion.div>
       </div>
     </section>
   )

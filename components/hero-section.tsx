@@ -33,11 +33,11 @@ export default function HeroSection() {
     return () => window.removeEventListener('resize', checkMobile)
   }, [])
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden z-0">
       <div
-        className="text-center z-10 px-6"
+        className="text-center z-10 px-6 relative"
         style={{
-          transform: isMobile ? undefined : `translate3d(0, ${scrollY * 0.1}px, 0)`,
+          transform: isMobile ? undefined : `translate3d(0, ${Math.min(scrollY * 0.05, 100)}px, 0)`,
           willChange: isMobile ? undefined : "transform",
         }}
       >
@@ -60,7 +60,7 @@ export default function HeroSection() {
         <h2
           className="text-lg md:text-3xl lg:text-4xl text-white mb-2 md:mb-4 font-light"
           style={{
-            transform: isMobile ? undefined : `translate3d(0, ${scrollY * 0.15}px, 0)`,
+            transform: isMobile ? undefined : `translate3d(0, ${Math.min(scrollY * 0.08, 80)}px, 0)`,
             willChange: isMobile ? undefined : "transform",
           }}
         >
@@ -70,7 +70,7 @@ export default function HeroSection() {
         <p
           className="text-sm md:text-xl text-gray-400 mb-6 md:mb-8 max-w-3xl mx-auto leading-relaxed"
           style={{
-            transform: isMobile ? undefined : `translate3d(0, ${scrollY * 0.2}px, 0)`,
+            transform: isMobile ? undefined : `translate3d(0, ${Math.min(scrollY * 0.1, 60)}px, 0)`,
             willChange: isMobile ? undefined : "transform",
           }}
         >
@@ -81,7 +81,7 @@ export default function HeroSection() {
 
         <div
           style={{
-            transform: isMobile ? undefined : `translate3d(0, ${scrollY * 0.05}px, 0)`,
+            transform: isMobile ? undefined : `translate3d(0, ${Math.min(scrollY * 0.03, 40)}px, 0)`,
             willChange: isMobile ? undefined : "transform",
           }}
         >

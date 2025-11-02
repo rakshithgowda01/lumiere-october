@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react'; // Added useCallback
 import { motion, AnimatePresence } from 'framer-motion';
 
 type Testimonial = {
@@ -17,7 +17,7 @@ type ComponentProps = {
 export const Component: React.FC<ComponentProps> = ({ testimonials }) => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
-  const audioPlayerRef = useRef<HTMLAudioElement | null>(null);
+  const audioPlayerRef = useRef<HTMLAudioElement | null>(null); 
   const [hasBeenHovered, setHasBeenHovered] = useState<boolean[]>(new Array(testimonials.length).fill(false));
   const [typedText, setTypedText] = useState('');
   const typewriterTimeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -25,13 +25,13 @@ export const Component: React.FC<ComponentProps> = ({ testimonials }) => {
 
   const stopAudio = useCallback(() => {
     if (audioPlayerRef.current) {
-      audioPlayerRef.current.pause();
-      audioPlayerRef.current.currentTime = 0;
-      audioPlayerRef.current.src = '';
-      audioPlayerRef.current.load();
-      audioPlayerRef.current = null;
+      audioPlayerRef.current.pause(); 
+      audioPlayerRef.current.currentTime = 0; 
+      audioPlayerRef.current.src = ''; 
+      audioPlayerRef.current.load(); 
+      audioPlayerRef.current = null; 
     }
-  }, []);
+  }, []); 
 
   const startTypewriter = useCallback((text: string) => {
     if (typewriterTimeoutRef.current) {
@@ -39,6 +39,7 @@ export const Component: React.FC<ComponentProps> = ({ testimonials }) => {
     }
     setTypedText('');
     currentTextRef.current = text;
+    
     let i = 0;
     const type = () => {
       if (i <= text.length) {
@@ -49,7 +50,6 @@ export const Component: React.FC<ComponentProps> = ({ testimonials }) => {
     };
     type();
   }, []);
-
   const stopTypewriter = useCallback(() => {
     if (typewriterTimeoutRef.current) {
       clearTimeout(typewriterTimeoutRef.current);
@@ -57,36 +57,40 @@ export const Component: React.FC<ComponentProps> = ({ testimonials }) => {
     }
     setTypedText('');
     currentTextRef.current = '';
-  }, []);
-
+  }, []); 
   const handleMouseEnter = useCallback((index: number) => {
-    stopAudio();
+    
+    stopAudio(); 
+
     setHoveredIndex(index);
+  
     const newAudio = new Audio(`/audio/${testimonials[index].audio}`);
-    audioPlayerRef.current = newAudio;
-    newAudio.play().catch((e) => {
-      console.warn('Audio playback prevented or failed:', e);
+    audioPlayerRef.current = newAudio; 
+    newAudio.play().catch(e => {
+        console.warn("Audio playback prevented or failed:", e);
+      
     });
-    setHasBeenHovered((prev) => {
+    
+    setHasBeenHovered(prev => {
       const updated = [...prev];
       updated[index] = true;
       return updated;
     });
     startTypewriter(testimonials[index].text);
-  }, [testimonials, stopAudio, startTypewriter]);
+  }, [testimonials, stopAudio, startTypewriter]); 
 
+  
   const handleMouseLeave = useCallback(() => {
-    stopAudio();
+    stopAudio(); 
     setHoveredIndex(null);
     stopTypewriter();
   }, [stopAudio, stopTypewriter]);
-
   useEffect(() => {
     return () => {
-      stopAudio();
-      stopTypewriter();
+      stopAudio(); 
+      stopTypewriter(); 
     };
-  }, [stopAudio, stopTypewriter]);
+  }, [stopAudio, stopTypewriter]); 
 
   return (
     <div className="flex justify-center items-center gap-4 flex-wrap">
@@ -94,19 +98,23 @@ export const Component: React.FC<ComponentProps> = ({ testimonials }) => {
         <motion.div
           key={index}
           className="relative flex flex-col items-center"
-          onMouseEnter={() => handleMouseEnter(index)}
+          onMouseEnter={() => handleMouseEnter(index)} 
           onMouseLeave={handleMouseLeave}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
           <motion.img
-            src={testimonial.image}
+            src={testimonial.image || '/placeholder-user.jpg'}
             alt={`Testimonial ${index}`}
-            className="w-16 h-16 rounded-full border-4 hover:animate-pulse border-gray-300"
-            animate={{
+            className="w-16 h-16 rounded-full border-4 hover:animate-pulse border-gray-300 object-cover"
+            animate={{ 
               borderColor: (hoveredIndex === index || hasBeenHovered[index]) ? '#ACA0FB' : '#E5E7EB'
             }}
             transition={{ duration: 0.3 }}
+            onError={(e) => {
+              const target = e.target as HTMLImageElement;
+              target.src = '/placeholder-user.jpg';
+            }}
           />
           <AnimatePresence>
             {hoveredIndex === index && (
@@ -136,6 +144,3 @@ export const Component: React.FC<ComponentProps> = ({ testimonials }) => {
     </div>
   );
 };
-
-
-

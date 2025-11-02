@@ -58,14 +58,13 @@ const TeamSection = React.forwardRef<HTMLDivElement, TeamSectionProps>(
           <div className="relative z-10 flex w-full flex-col items-center justify-between gap-4 md:flex-row md:items-start md:text-left lg:gap-8">
             <div className="grid gap-2 text-center md:text-left">
               <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl text-muted-foreground">
-                <span className="text-primary block text-xl sm:text-2xl md:text-3xl font-medium">
-                  O U R
-                </span>
                 {title}
               </h1>
-              <p className="max-w-[700px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                {description}
-              </p>
+              {description && (
+                <p className="max-w-[700px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+                  {description}
+                </p>
+              )}
             </div>
             <div className="flex flex-col items-center gap-4 md:items-end">
               {logo && <div className="text-2xl font-bold">{logo}</div>}
@@ -270,7 +269,7 @@ export default function TeamSectionDemo() {
       socialLinks: [
         {
           icon: Instagram,
-          href: "https://instagram.com/"
+          href: "https://www.instagram.com/nasharthurr?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
         },
       ],
     },
@@ -283,7 +282,7 @@ export default function TeamSectionDemo() {
       socialLinks: [
         {
           icon: Instagram,
-          href: "https://instagram.com/"
+          href: "https://www.instagram.com/hruthik.g7?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
         },
       ],
     },
@@ -296,7 +295,7 @@ export default function TeamSectionDemo() {
       socialLinks: [
         {
           icon: Instagram,
-          href: "https://instagram.com/"
+          href: "https://www.instagram.com/mayank_939?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
         },
       ],
     },
@@ -304,8 +303,8 @@ export default function TeamSectionDemo() {
 
   return (
     <TeamSection
-      title="CREATIVE TEAM"
-      description="A passionate agency team dedicated to providing exceptional editing, creative spark, and innovative storytelling that elevates your brand."
+      title="MEET THE FOUNDERS"
+      description=""
       members={teamMembers}
       logo="Lumière"
     />
