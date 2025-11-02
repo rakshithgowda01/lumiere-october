@@ -16,12 +16,23 @@ type ComponentProps = {
 
 export const Component: React.FC<ComponentProps> = ({ testimonials }) => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
 
   const audioPlayerRef = useRef<HTMLAudioElement | null>(null); 
   const [hasBeenHovered, setHasBeenHovered] = useState<boolean[]>(new Array(testimonials.length).fill(false));
   const [typedText, setTypedText] = useState('');
   const typewriterTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const currentTextRef = useRef('');
+
+  // Check if mobile on mount and resize
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const stopAudio = useCallback(() => {
     if (audioPlayerRef.current) {
@@ -59,7 +70,7 @@ export const Component: React.FC<ComponentProps> = ({ testimonials }) => {
     currentTextRef.current = '';
   }, []); 
   const handleMouseEnter = useCallback((index: number) => {
-    
+    if (isMobile) return; // Don't trigger on mobile
     stopAudio(); 
 
     setHoveredIndex(index);
@@ -77,14 +88,16 @@ export const Component: React.FC<ComponentProps> = ({ testimonials }) => {
       return updated;
     });
     startTypewriter(testimonials[index].text);
-  }, [testimonials, stopAudio, startTypewriter]); 
+  }, [testimonials, stopAudio, startTypewriter, isMobile]); 
 
   
   const handleMouseLeave = useCallback(() => {
+    if (isMobile) return; // Don't trigger on mobile
     stopAudio(); 
     setHoveredIndex(null);
     stopTypewriter();
-  }, [stopAudio, stopTypewriter]);
+  }, [stopAudio, stopTypewriter, isMobile]);
+  
   useEffect(() => {
     return () => {
       stopAudio(); 
@@ -92,6 +105,44 @@ export const Component: React.FC<ComponentProps> = ({ testimonials }) => {
     };
   }, [stopAudio, stopTypewriter]); 
 
+  // Mobile layout - simple card-based
+  if (isMobile) {
+    return (
+      <div className="w-full px-4">
+        <div className="grid grid-cols-1 gap-6 max-w-2xl mx-auto">
+          {testimonials.map((testimonial, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg p-6"
+            >
+              <div className="flex items-center gap-4 mb-4">
+                <img
+                  src={testimonial.image || '/placeholder-user.jpg'}
+                  alt={testimonial.name}
+                  className="w-12 h-12 rounded-full object-cover border-2 border-white/30"
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    target.src = '/placeholder-user.jpg';
+                  }}
+                />
+                <div>
+                  <p className="font-semibold text-white">{testimonial.name}</p>
+                  <p className="text-sm text-gray-400">{testimonial.jobtitle}</p>
+                </div>
+              </div>
+              <p className="text-white/90 text-sm leading-relaxed">{testimonial.text}</p>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  // Desktop layout - hover typewriter effect
   return (
     <div className="flex justify-center items-center gap-4 flex-wrap">
       {testimonials.map((testimonial, index) => (
@@ -123,7 +174,7 @@ export const Component: React.FC<ComponentProps> = ({ testimonials }) => {
                 animate={{ opacity: 1, scale: 1, y: -20 }}
                 exit={{ opacity: 0, scale: 0.8, y: -10 }}
                 transition={{ duration: 0.4 }}
-                className="absolute bottom-20 bg-white text-black text-sm px-4 py-3 rounded-lg shadow-2xl max-w-xs w-56"
+                className="absolute bottom-20 bg-white text-black text-sm px-4 py-3 rounded-lg shadow-2xl max-w-xs w-56 z-50"
               >
                 <div className="h-24 overflow-hidden whitespace-pre-wrap">
                   {typedText}
