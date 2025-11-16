@@ -32,15 +32,76 @@ const ReelCard: React.FC<ReelCardProps> = ({ reel, isExpanded, onHover, onLeave,
   React.useEffect(() => {
     if (!videoRef.current) return
     const el = videoRef.current
+    
+    // Set video properties for autoplay - must be muted to autoplay
+    el.muted = true // Always start muted for autoplay compatibility
+    el.loop = true
+    el.playsInline = true
+    el.preload = "auto"
+    
     // Try to autoplay whenever available
-    const tryPlay = () => el.play().catch(() => {})
-    el.muted = isMuted
+    const tryPlay = async () => {
+      try {
+        el.muted = true // Ensure muted for autoplay
+        await el.play()
+        // After successful play, update muted state based on user preference
+        if (!isMuted) {
+          el.muted = false
+        }
+      } catch (error) {
+        // Autoplay failed - will need user interaction
+        console.log("Autoplay prevented, waiting for user interaction")
+      }
+    }
+    
+    // Multiple attempts to ensure video plays
     el.addEventListener('loadedmetadata', tryPlay, { once: true })
+    el.addEventListener('canplay', tryPlay, { once: true })
+    
+    // Try immediately
     tryPlay()
+    
     return () => {
       el.removeEventListener('loadedmetadata', tryPlay as any)
+      el.removeEventListener('canplay', tryPlay as any)
+    }
+  }, [])
+
+  // Update muted state when user toggles it
+  React.useEffect(() => {
+    if (videoRef.current && videoRef.current.readyState >= 2) {
+      videoRef.current.muted = isMuted
     }
   }, [isMuted])
+
+  // Intersection Observer to play video when in view
+  React.useEffect(() => {
+    if (!videoRef.current) return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && videoRef.current) {
+            videoRef.current.muted = true // Must be muted for autoplay
+            videoRef.current.play().catch(() => {
+              // Autoplay prevented - will require user interaction
+            })
+          } else if (!entry.isIntersecting && videoRef.current) {
+            videoRef.current.pause()
+          }
+        })
+      },
+      { threshold: 0.5 }
+    )
+
+    observer.observe(videoRef.current)
+
+    return () => {
+      if (videoRef.current) {
+        observer.unobserve(videoRef.current)
+      }
+    }
+  }, [])
 
   return (
     <motion.div
@@ -118,7 +179,18 @@ const ReelCard: React.FC<ReelCardProps> = ({ reel, isExpanded, onHover, onLeave,
               style={{ width: isMobile ? "100%" : "200px" }}
               layout
             >
-              <video ref={videoRef} src={reel.videoUrl} poster={reel.thumbnail} className="w-full h-full object-cover" loop muted={isMuted} playsInline preload="auto" autoPlay style={{ aspectRatio: isMobile ? "9/16" : "auto" }} />
+              <video 
+                ref={videoRef} 
+                src={reel.videoUrl} 
+                poster={reel.thumbnail} 
+                className="w-full h-full object-cover" 
+                loop 
+                muted
+                playsInline 
+                preload="auto"
+                autoPlay={true}
+                style={{ aspectRatio: isMobile ? "9/16" : "auto" }}
+              />
               <button
                 onClick={(e) => { e.stopPropagation(); setIsMuted(!isMuted) }}
                 onMouseDown={(e) => e.stopPropagation()}

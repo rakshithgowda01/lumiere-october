@@ -268,6 +268,35 @@ export default function PortfolioSection() {
             </div>
           )}
         </div>
+
+        {/* Google Drive Gallery Section */}
+        <div className="mt-24">
+          <div className="text-center mb-12">
+            <h3 className="text-3xl md:text-4xl font-bold text-white font-mono mb-4">
+              Gallery
+            </h3>
+            <p className="text-gray-400 text-sm md:text-base">
+              Browse all our images and videos
+            </p>
+          </div>
+          
+          {/* Premium Gallery Container */}
+          <div className="relative w-full rounded-2xl overflow-hidden shadow-2xl shadow-blue-500/10 bg-gradient-to-br from-blue-900/10 to-purple-900/10 border border-white/10 backdrop-blur-sm p-1">
+            <div className="w-full rounded-xl overflow-hidden bg-black/50">
+              <iframe
+                src="https://drive.google.com/embeddedfolderview?id=186eLzZXPgVtzoI4wj_x-AyMijR4xmJQ1#grid"
+                className="w-full border-0 rounded-xl gallery-iframe"
+                style={{ 
+                  height: '800px',
+                  minHeight: '600px',
+                  width: '100%',
+                }}
+                allow="autoplay"
+                title="Portfolio Gallery"
+              />
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   )

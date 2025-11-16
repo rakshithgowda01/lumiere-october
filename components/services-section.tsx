@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   Video, 
@@ -85,23 +85,54 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ service, isActive, onClick })
 
 const CalendarDialog: React.FC<CalendarDialogProps> = ({ serviceName, isOpen, onClose }) => {
   return (
-    <AnimatePresence>
+    <AnimatePresence mode="wait">
       {isOpen && (
         <>
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50"
+            transition={{ 
+              duration: 0.6, 
+              ease: [0.16, 1, 0.3, 1]
+            }}
+            className="fixed inset-0 bg-black/95 backdrop-blur-md z-[99998]"
             onClick={onClose}
+            onWheel={(e) => e.preventDefault()}
+            onTouchMove={(e) => e.preventDefault()}
+            style={{ 
+              position: 'fixed', 
+              top: 0, 
+              left: 0, 
+              right: 0, 
+              bottom: 0,
+              overflow: 'hidden',
+              touchAction: 'none',
+              zIndex: 99998
+            }}
           />
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div 
+            className="fixed inset-0 z-[99999] flex items-center justify-center p-4 pointer-events-none"
+            onWheel={(e) => e.preventDefault()}
+            onTouchMove={(e) => e.preventDefault()}
+            style={{ 
+              overflow: 'hidden', 
+              touchAction: 'none',
+              zIndex: 99999
+            }}
+          >
             <motion.div
-              className="relative w-full max-w-md bg-gray-900 rounded-2xl shadow-2xl border border-gray-700"
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
-              transition={{ duration: 0.3 }}
+              className="relative w-full max-w-md bg-gray-900 rounded-2xl shadow-2xl border border-gray-700 pointer-events-auto"
+              initial={{ opacity: 0, scale: 0.96, y: 10 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.96, y: 10 }}
+              transition={{ 
+                duration: 0.6, 
+                ease: [0.16, 1, 0.3, 1],
+                opacity: { duration: 0.5 }
+              }}
+              onClick={(e) => e.stopPropagation()}
+              onWheel={(e) => e.stopPropagation()}
             >
               <button
                 onClick={onClose}
@@ -209,24 +240,65 @@ const ServiceDialog: React.FC<ServiceDialogProps> = ({ service, isOpen, onClose,
   if (!service) return null;
 
   return (
-    <AnimatePresence>
+    <AnimatePresence mode="wait">
       {isOpen && (
         <>
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50"
+            transition={{ 
+              duration: 0.6, 
+              ease: [0.16, 1, 0.3, 1]
+            }}
+            className="fixed inset-0 bg-black/95 backdrop-blur-md z-[99998]"
             onClick={onClose}
+            onWheel={(e) => e.preventDefault()}
+            onTouchMove={(e) => e.preventDefault()}
+            style={{ 
+              position: 'fixed', 
+              top: 0, 
+              left: 0, 
+              right: 0, 
+              bottom: 0,
+              overflow: 'hidden',
+              touchAction: 'none',
+              zIndex: 99998
+            }}
           />
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div 
+            className="fixed inset-0 z-[99999] flex items-center justify-center p-4 pointer-events-none"
+            onWheel={(e) => e.preventDefault()}
+            onTouchMove={(e) => e.preventDefault()}
+            style={{ 
+              overflow: 'hidden', 
+              touchAction: 'none',
+              zIndex: 99999
+            }}
+          >
             <motion.div
               layoutId={`card-${service.id}`}
-              className="relative w-full max-w-4xl max-h-[90vh] overflow-auto bg-gray-900 rounded-2xl shadow-2xl border border-gray-700"
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
-              transition={{ duration: 0.3 }}
+              className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto bg-gray-900 rounded-2xl shadow-2xl border border-gray-700 pointer-events-auto"
+              initial={{ opacity: 0, scale: 0.96, y: 10 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.96, y: 10 }}
+              transition={{ 
+                duration: 0.6, 
+                ease: [0.16, 1, 0.3, 1],
+                opacity: { duration: 0.5 }
+              }}
+              onClick={(e) => e.stopPropagation()}
+              onWheel={(e) => {
+                // Allow scrolling inside the modal content only
+                const target = e.currentTarget;
+                const isScrollable = target.scrollHeight > target.clientHeight;
+                const isAtTop = target.scrollTop === 0;
+                const isAtBottom = target.scrollTop + target.clientHeight >= target.scrollHeight - 1;
+                
+                if (!isScrollable || (e.deltaY < 0 && isAtTop) || (e.deltaY > 0 && isAtBottom)) {
+                  e.preventDefault();
+                }
+              }}
             >
               <button
                 onClick={onClose}
@@ -358,6 +430,47 @@ export default function ServicesSection() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const [selectedServiceForCalendar, setSelectedServiceForCalendar] = useState<string>('');
+
+  // Prevent scrolling when dialogs are open
+  useEffect(() => {
+    if (isDialogOpen || isCalendarOpen) {
+      // Lock body scroll
+      const originalOverflow = document.body.style.overflow;
+      const originalPosition = document.body.style.position;
+      const originalTop = document.body.style.top;
+      const scrollY = window.scrollY;
+      
+      document.body.style.overflow = 'hidden';
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.width = '100%';
+
+      // Prevent scroll events
+      const preventScroll = (e: Event) => {
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+      };
+
+      window.addEventListener('scroll', preventScroll, { passive: false, capture: true });
+      window.addEventListener('wheel', preventScroll, { passive: false, capture: true });
+      window.addEventListener('touchmove', preventScroll, { passive: false, capture: true });
+
+      return () => {
+        // Delay scroll restoration to allow animation to complete
+        setTimeout(() => {
+          document.body.style.overflow = originalOverflow;
+          document.body.style.position = originalPosition;
+          document.body.style.top = originalTop;
+          document.body.style.width = '';
+          window.scrollTo(0, scrollY);
+        }, 650);
+        window.removeEventListener('scroll', preventScroll, { capture: true } as any);
+        window.removeEventListener('wheel', preventScroll, { capture: true } as any);
+        window.removeEventListener('touchmove', preventScroll, { capture: true } as any);
+      };
+    }
+  }, [isDialogOpen, isCalendarOpen]);
 
   const services: ServiceData[] = [
     {
@@ -579,7 +692,7 @@ export default function ServicesSection() {
 
   const handleCloseDialog = () => {
     setIsDialogOpen(false);
-    setTimeout(() => setSelectedService(null), 300);
+    setTimeout(() => setSelectedService(null), 600);
   };
 
   const handleGetStarted = (serviceName: string) => {

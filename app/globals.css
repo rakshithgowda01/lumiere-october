@@ -421,3 +421,116 @@ section {
 .text-white\/80 {
   color: rgba(255, 255, 255, 0.8);
 }
+
+/* Google Drive Gallery iframe responsive styles */
+.gallery-iframe {
+  transition: all 0.3s ease;
+}
+
+@media (max-width: 768px) {
+  .gallery-iframe {
+    height: 600px !important;
+    min-height: 500px !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .gallery-iframe {
+    height: 500px !important;
+    min-height: 400px !important;
+  }
+}
+
+/* Portfolio Section Styles */
+#portfolio {
+  width: 100%;
+  padding: 40px 20px;
+}
+
+.cat-title {
+  font-size: 30px;
+  margin: 30px 0 15px;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 1px;
+  font-family: var(--font-mono);
+}
+
+.gdrive-box {
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  background: #1a1a1a;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.gdrive-box iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+@media (max-width: 768px) {
+  .cat-title {
+    font-size: 24px;
+    margin: 25px 0 12px;
+  }
+
+  .gdrive-box {
+    height: 60vh;
+    margin-bottom: 40px;
+    border-radius: 16px;
+  }
+}
+
+@media (max-width: 640px) {
+  .cat-title {
+    font-size: 20px;
+    margin: 20px 0 10px;
+  }
+
+  .gdrive-box {
+    height: 50vh;
+    margin-bottom: 30px;
+    border-radius: 12px;
+  }
+}
+
+/* Portfolio Carousel Enhancements */
+.portfolio-carousel-slide {
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.portfolio-carousel-arrow {
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.portfolio-carousel-arrow:hover {
+  box-shadow: 0 8px 25px rgba(255, 255, 255, 0.15);
+}
+
+.portfolio-indicator {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+
+.portfolio-indicator:hover {
+  transform: scale(1.2);
+}
+
+/* Ensure all page sections stay below modals */
+section {
+  position: relative;
+  z-index: 1;
+}
+
+/* Ensure modals are always on top */
+[class*="z-\[999"] {
+  isolation: isolate;
+}

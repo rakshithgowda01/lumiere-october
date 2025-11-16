@@ -1,6 +1,6 @@
 "use client"
-import ParallaxGalleryPage from "@/components/ui/parallax-gallery"
+import PortfolioGalleryCarousel from "@/components/portfolio-gallery-carousel"
 
 export default function PortfolioPage() {
-  return <ParallaxGalleryPage />
+  return <PortfolioGalleryCarousel />
 }
