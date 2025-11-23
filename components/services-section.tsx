@@ -113,16 +113,18 @@ const CalendarDialog: React.FC<CalendarDialogProps> = ({ serviceName, isOpen, on
           />
           <div 
             className="fixed inset-0 z-[99999] flex items-center justify-center p-4 pointer-events-none"
-            onWheel={(e) => e.preventDefault()}
-            onTouchMove={(e) => e.preventDefault()}
             style={{ 
               overflow: 'hidden', 
-              touchAction: 'none',
               zIndex: 99999
             }}
           >
             <motion.div
-              className="relative w-full max-w-md bg-gray-900 rounded-2xl shadow-2xl border border-gray-700 pointer-events-auto"
+              data-modal-content
+              className="relative w-full max-w-md bg-gray-900 rounded-2xl shadow-2xl border border-gray-700 pointer-events-auto max-h-[90vh] overflow-y-auto"
+              style={{
+                WebkitOverflowScrolling: 'touch',
+                touchAction: 'pan-y'
+              }}
               initial={{ opacity: 0, scale: 0.96, y: 10 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.96, y: 10 }}
@@ -132,7 +134,6 @@ const CalendarDialog: React.FC<CalendarDialogProps> = ({ serviceName, isOpen, on
                 opacity: { duration: 0.5 }
               }}
               onClick={(e) => e.stopPropagation()}
-              onWheel={(e) => e.stopPropagation()}
             >
               <button
                 onClick={onClose}
@@ -268,17 +269,19 @@ const ServiceDialog: React.FC<ServiceDialogProps> = ({ service, isOpen, onClose,
           />
           <div 
             className="fixed inset-0 z-[99999] flex items-center justify-center p-4 pointer-events-none"
-            onWheel={(e) => e.preventDefault()}
-            onTouchMove={(e) => e.preventDefault()}
             style={{ 
               overflow: 'hidden', 
-              touchAction: 'none',
               zIndex: 99999
             }}
           >
             <motion.div
               layoutId={`card-${service.id}`}
+              data-modal-content
               className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto bg-gray-900 rounded-2xl shadow-2xl border border-gray-700 pointer-events-auto"
+              style={{
+                WebkitOverflowScrolling: 'touch',
+                touchAction: 'pan-y'
+              }}
               initial={{ opacity: 0, scale: 0.96, y: 10 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.96, y: 10 }}
@@ -438,36 +441,73 @@ export default function ServicesSection() {
       const originalOverflow = document.body.style.overflow;
       const originalPosition = document.body.style.position;
       const originalTop = document.body.style.top;
-      const scrollY = window.scrollY;
+      const originalWidth = document.body.style.width;
+      const scrollY = window.scrollY || window.pageYOffset || document.documentElement.scrollTop;
+      
+      // Store scroll position in a data attribute for reliable restoration
+      document.body.setAttribute('data-scroll-position', scrollY.toString());
       
       document.body.style.overflow = 'hidden';
       document.body.style.position = 'fixed';
       document.body.style.top = `-${scrollY}px`;
       document.body.style.width = '100%';
 
-      // Prevent scroll events
+      // Prevent scroll events on window (but allow inside modal)
       const preventScroll = (e: Event) => {
-        e.preventDefault();
-        e.stopPropagation();
-        return false;
+        // Only prevent if the event is not from the modal content
+        const target = e.target;
+        if (target && target instanceof HTMLElement) {
+          const isModalContent = target.closest('[data-modal-content]');
+          if (!isModalContent) {
+            e.preventDefault();
+            e.stopPropagation();
+            return false;
+          }
+        } else {
+          // If target is not an HTMLElement, prevent scroll
+          e.preventDefault();
+          e.stopPropagation();
+          return false;
+        }
+      };
+
+      const preventWheel = (e: WheelEvent) => {
+        const target = e.target;
+        if (target && target instanceof HTMLElement) {
+          const isModalContent = target.closest('[data-modal-content]');
+          if (!isModalContent) {
+            e.preventDefault();
+            e.stopPropagation();
+          }
+        } else {
+          // If target is not an HTMLElement, prevent scroll
+          e.preventDefault();
+          e.stopPropagation();
+        }
       };
 
       window.addEventListener('scroll', preventScroll, { passive: false, capture: true });
-      window.addEventListener('wheel', preventScroll, { passive: false, capture: true });
-      window.addEventListener('touchmove', preventScroll, { passive: false, capture: true });
+      window.addEventListener('wheel', preventWheel, { passive: false, capture: true });
 
       return () => {
-        // Delay scroll restoration to allow animation to complete
-        setTimeout(() => {
-          document.body.style.overflow = originalOverflow;
-          document.body.style.position = originalPosition;
-          document.body.style.top = originalTop;
-          document.body.style.width = '';
-          window.scrollTo(0, scrollY);
-        }, 650);
+        // Remove event listeners immediately
         window.removeEventListener('scroll', preventScroll, { capture: true } as any);
-        window.removeEventListener('wheel', preventScroll, { capture: true } as any);
-        window.removeEventListener('touchmove', preventScroll, { capture: true } as any);
+        window.removeEventListener('wheel', preventWheel, { capture: true } as any);
+        
+        // Restore scroll position immediately
+        const savedScrollY = parseInt(document.body.getAttribute('data-scroll-position') || '0', 10);
+        document.body.removeAttribute('data-scroll-position');
+        
+        // Restore styles
+        document.body.style.overflow = originalOverflow;
+        document.body.style.position = originalPosition;
+        document.body.style.top = originalTop;
+        document.body.style.width = originalWidth;
+        
+        // Restore scroll position - use requestAnimationFrame for smooth restoration
+        requestAnimationFrame(() => {
+          window.scrollTo(0, savedScrollY);
+        });
       };
     }
   }, [isDialogOpen, isCalendarOpen]);
