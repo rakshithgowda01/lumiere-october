@@ -32,6 +32,11 @@ export const metadata: Metadata = {
   title: "Lumière - Where Stories Shine Brighter",
   description: "Professional video production and editing services",
   generator: "v0.app",
+  icons: {
+    icon: "/image.png",
+    shortcut: "/image.png",
+    apple: "/image.png",
+  },
 }
 
 export default function RootLayout({
