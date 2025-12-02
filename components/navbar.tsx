@@ -13,6 +13,9 @@ import { ScheduleCalendar } from "@/components/ui/schedule-calendar"
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
+  const [isShareDialogOpen, setIsShareDialogOpen] = useState(false)
+  const [copied, setCopied] = useState(false)
+  const [hasNativeShare, setHasNativeShare] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -29,11 +32,46 @@ export default function Navbar() {
     }
   }, [])
 
+  useEffect(() => {
+    if (typeof window !== "undefined" && typeof navigator !== "undefined" && "share" in navigator) {
+      setHasNativeShare(true)
+    }
+  }, [])
+
+  const handleShare = async () => {
+    const shareData = {
+      title: "Lumière Agency",
+      text: "Check out our portfolio",
+      url: "https://lumiereagency.vercel.app/",
+    }
+
+    if (hasNativeShare && typeof navigator !== "undefined" && "share" in navigator) {
+      try {
+        await (navigator as any).share(shareData)
+        return
+      } catch {
+        // ignore and fall back
+      }
+    }
+
+    try {
+      if (typeof navigator !== "undefined" && navigator.clipboard && navigator.clipboard.writeText) {
+        await navigator.clipboard.writeText(shareData.url)
+        setCopied(true)
+        setIsShareDialogOpen(true)
+        setTimeout(() => setCopied(false), 2000)
+      } else {
+        setIsShareDialogOpen(true)
+      }
+    } catch {
+      setIsShareDialogOpen(true)
+    }
+  }
+
   const navItems = [
     { name: "Services", href: "#services" },
     { name: "Portfolio", href: "/portfolio" },
     { name: "Contact", href: "#contact" },
-    { name: "Share", href: "#share" },
   ]
 
   return (
@@ -65,9 +103,16 @@ export default function Navbar() {
             ))}
           </div>
 
-          <div className="hidden md:flex items-center ml-auto">
+          <div className="hidden md:flex items-center ml-auto space-x-3">
+            <button
+              type="button"
+              onClick={handleShare}
+              className="text-gray-300 hover:text-white text-sm font-medium px-3 py-1.5 rounded-full border border-white/10 hover:border-white/40 transition-colors duration-200"
+            >
+              Share
+            </button>
             <a
-              href={process.env.NEXT_PUBLIC_CAL_URL || "https://cal.com/your-username/15min"}
+              href={process.env.NEXT_PUBLIC_CAL_URL || "https://cal.com/lumiere-ccdlpn/30min"}
               target="_blank"
               rel="noopener noreferrer"
               className="bg-gray-200 text-black px-4 py-1.5 rounded-full hover:bg-white transition-all duration-300 font-medium text-sm hover:scale-105 active:scale-95 font-mono"
@@ -90,25 +135,66 @@ export default function Navbar() {
                       { label: "Services", href: "#services" },
                       { label: "Portfolio", href: "/portfolio" },
                       { label: "Contact", href: "#contact" },
-                      { label: "Share", href: "#share" },
                     ]}
                     color="#ffffff"
                     skew={-5}
                   />
-                  <a
-                    href={process.env.NEXT_PUBLIC_CAL_URL || "https://cal.com/your-username/15min"}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex mt-2 items-center justify-center px-4 py-2 rounded-full bg-gray-200 text-black transition-all duration-300 hover:bg-white hover:scale-105 active:scale-95 font-mono"
-                  >
-                    Schedule Call
-                  </a>
+                  <div className="space-y-3 pt-2">
+                    <button
+                      type="button"
+                      onClick={handleShare}
+                      className="w-full inline-flex items-center justify-center px-4 py-2 rounded-full border border-white/20 text-white transition-all duration-300 hover:bg-white hover:text-black hover:scale-105 active:scale-95 font-mono"
+                    >
+                      Share
+                    </button>
+                    <a
+                      href={process.env.NEXT_PUBLIC_CAL_URL || "https://cal.com/lumiere-ccdlpn/30min"}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full inline-flex mt-1 items-center justify-center px-4 py-2 rounded-full bg-gray-200 text-black transition-all duration-300 hover:bg-white hover:scale-105 active:scale-95 font-mono"
+                    >
+                      Schedule Call
+                    </a>
+                  </div>
                 </div>
               </SheetContent>
             </Sheet>
           </div>
         </div>
       </div>
+
+      <Dialog open={isShareDialogOpen} onOpenChange={setIsShareDialogOpen}>
+        <DialogContent className="bg-black/90 border border-white/10 text-white max-w-sm">
+          <DialogHeader>
+            <DialogTitle className="text-lg">Share Lumière</DialogTitle>
+          </DialogHeader>
+          <div className="mt-4 space-y-3">
+            <p className="description-text description-text-muted">
+              {copied ? "Link copied to clipboard." : "Copy and share the link with your audience."}
+            </p>
+            <div className="flex items-center gap-2">
+              <code className="flex-1 px-3 py-2 rounded-md bg-white/5 text-xs overflow-x-auto">
+                https://lumiereagency.vercel.app/
+              </code>
+              <button
+                type="button"
+                onClick={async () => {
+                  try {
+                    await navigator.clipboard.writeText("https://lumiereagency.vercel.app/")
+                    setCopied(true)
+                    setTimeout(() => setCopied(false), 2000)
+                  } catch {
+                    setCopied(false)
+                  }
+                }}
+                className="px-3 py-2 text-xs rounded-md border border-white/20 hover:bg-white hover:text-black transition-colors"
+              >
+                {copied ? "Copied" : "Copy"}
+              </button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </nav>
   )
 }

@@ -105,7 +105,7 @@ export default function Home() {
       <section id="gallery" className="py-12 relative z-10">
         <div className="max-w-7xl mx-auto px-4">
           <div className="text-center mb-8">
-            <h2 className="text-4xl md:text-5xl font-bold text-white font-mono">Gallery Showcase</h2>
+            <h2 className="text-4xl md:text-5xl font-bold text-white">Gallery Showcase</h2>
           </div>
           <GalleryShowcase photos={galleryPhotos} />
         </div>
@@ -123,13 +123,13 @@ export default function Home() {
       <div className="w-full h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
 
       {/* Reach Out to Us Section */}
-      <section className="py-20 px-6">
+      <section id="reach-out" className="py-20 px-6">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-4xl md:text-6xl font-mono font-bold text-white mb-6">
               Reach Out to Us
             </h2>
-            <p className="text-lg text-gray-400 font-mono">
+            <p className="description-text description-text-muted">
               Ready to bring your vision to life? Let's discuss your project and create something amazing together.
             </p>
           </div>
@@ -144,9 +144,11 @@ export default function Home() {
       <section className="py-12">
         <div className="max-w-3xl mx-auto px-4 text-center">
           <h3 className="text-3xl md:text-4xl font-bold text-white mb-4">Schedule Consultation Call</h3>
-          <p className="text-gray-400 mb-6">15min consultation call to know about our services and agency</p>
+          <p className="description-text description-text-muted mb-6">
+            30-minute consultation to understand your brand, goals, and how Lumière can help you stand out.
+          </p>
           <a
-            href={process.env.NEXT_PUBLIC_CAL_URL || "https://cal.com/your-username/15min"}
+            href={process.env.NEXT_PUBLIC_CAL_URL || "https://cal.com/lumiere-ccdlpn/30min"}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center justify-center px-6 py-3 rounded-full bg-transparent border-2 border-white text-white transition-all duration-300 font-medium hover:bg-white hover:text-black hover:scale-105 active:scale-95 font-mono"

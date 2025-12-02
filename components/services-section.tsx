@@ -59,25 +59,25 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ service, isActive, onClick })
       layoutId={`card-${service.id}`}
       onClick={onClick}
       className={cn(
-        "relative flex h-36 w-80 cursor-pointer select-none flex-col justify-between rounded-xl border-2 bg-gray-900/70 backdrop-blur-sm px-6 py-4 transition-all duration-300",
-        "hover:border-blue-400/50 hover:bg-gray-900/90 hover:shadow-lg",
-        isActive ? "border-blue-400 bg-gray-900" : "border-gray-700"
+        "relative flex h-36 w-80 cursor-pointer select-none flex-col justify-between rounded-xl border bg-black/70 backdrop-blur-sm px-6 py-4 transition-all duration-300",
+        "hover:border-white/40 hover:bg-black/90 hover:shadow-lg",
+        isActive ? "border-white/70 bg-black" : "border-white/15"
       )}
       whileHover={{ scale: 1.02 }}
       whileTap={{ scale: 0.98 }}
     >
       <div className="flex items-center gap-3">
-        <div className="rounded-full bg-blue-400/10 p-2">
+        <div className="rounded-full bg-white/5 p-2 border border-white/15">
           {service.icon}
         </div>
         <div className="flex-1">
           <h3 className="text-lg font-semibold text-white">{service.title}</h3>
-          <p className="text-sm text-gray-400 line-clamp-2">{service.description}</p>
+          <p className="text-sm text-gray-300 line-clamp-2">{service.description}</p>
         </div>
       </div>
       <div className="flex items-center justify-between mt-2">
         <span className="text-xs text-gray-400">Click to learn more</span>
-        <ArrowRight className="h-4 w-4 text-blue-400" />
+        <ArrowRight className="h-4 w-4 text-white/70" />
       </div>
     </motion.div>
   );
@@ -144,11 +144,11 @@ const CalendarDialog: React.FC<CalendarDialogProps> = ({ serviceName, isOpen, on
 
               <div className="p-8">
                 <div className="text-center mb-6">
-                  <Calendar className="h-12 w-12 text-blue-400 mx-auto mb-4" />
+                  <Calendar className="h-12 w-12 text-white mx-auto mb-4" />
                   <h2 className="text-2xl font-bold text-white mb-2">
                     Book a Call for {serviceName}
                   </h2>
-                  <p className="text-gray-400">
+                  <p className="description-text description-text-muted">
                     Connect with us in more ways for fast response
                   </p>
                 </div>
@@ -165,15 +165,15 @@ const CalendarDialog: React.FC<CalendarDialogProps> = ({ serviceName, isOpen, on
                   </a>
                 </div>
 
-                <div className="bg-gray-800 rounded-lg p-6">
+                <div className="bg-black/60 rounded-lg p-6 border border-white/10">
                   <div className="grid grid-cols-7 gap-2 text-center">
-                    <div className="text-gray-400 text-sm font-medium">Mon</div>
-                    <div className="text-gray-400 text-sm font-medium">Tue</div>
-                    <div className="text-gray-400 text-sm font-medium">Wed</div>
-                    <div className="text-gray-400 text-sm font-medium">Thu</div>
-                    <div className="text-gray-400 text-sm font-medium">Fri</div>
-                    <div className="text-gray-400 text-sm font-medium">Sat</div>
-                    <div className="text-gray-400 text-sm font-medium">Sun</div>
+                    <div className="text-gray-400 text-xs font-medium">Mon</div>
+                    <div className="text-gray-400 text-xs font-medium">Tue</div>
+                    <div className="text-gray-400 text-xs font-medium">Wed</div>
+                    <div className="text-gray-400 text-xs font-medium">Thu</div>
+                    <div className="text-gray-400 text-xs font-medium">Fri</div>
+                    <div className="text-gray-400 text-xs font-medium">Sat</div>
+                    <div className="text-gray-400 text-xs font-medium">Sun</div>
                     
                     {Array.from({ length: 35 }, (_, i) => {
                       const day = i - 6;
@@ -182,7 +182,7 @@ const CalendarDialog: React.FC<CalendarDialogProps> = ({ serviceName, isOpen, on
                           key={i}
                           className={`h-8 w-8 rounded text-sm transition-colors ${
                             day > 0 && day <= 31
-                              ? 'text-white hover:bg-blue-600 hover:text-white'
+                              ? 'text-white hover:bg-white/15 hover:text-white'
                               : 'text-gray-600'
                           }`}
                         >
@@ -193,23 +193,23 @@ const CalendarDialog: React.FC<CalendarDialogProps> = ({ serviceName, isOpen, on
                   </div>
                 </div>
 
-                <div className="bg-gray-800 rounded-lg p-4 mb-6">
+                <div className="bg-black/60 rounded-lg p-4 mb-6 border border-white/10">
                   <h3 className="text-lg font-semibold text-white mb-3">Key Points to Know About Your Consultation</h3>
-                  <ul className="space-y-2 text-sm text-gray-300">
+                  <ul className="space-y-2 text-sm description-text description-text-muted">
                     <li className="flex items-start gap-2">
-                      <div className="w-1.5 h-1.5 bg-blue-400 rounded-full mt-2 flex-shrink-0" />
+                      <div className="w-1.5 h-1.5 bg-white rounded-full mt-2 flex-shrink-0" />
                       Free 30-minute consultation to discuss your project needs
                     </li>
                     <li className="flex items-start gap-2">
-                      <div className="w-1.5 h-1.5 bg-blue-400 rounded-full mt-2 flex-shrink-0" />
+                      <div className="w-1.5 h-1.5 bg-white rounded-full mt-2 flex-shrink-0" />
                       Detailed proposal and timeline within 24 hours
                     </li>
                     <li className="flex items-start gap-2">
-                      <div className="w-1.5 h-1.5 bg-blue-400 rounded-full mt-2 flex-shrink-0" />
+                      <div className="w-1.5 h-1.5 bg-white rounded-full mt-2 flex-shrink-0" />
                       No obligation - explore options at your own pace
                     </li>
                     <li className="flex items-start gap-2">
-                      <div className="w-1.5 h-1.5 bg-blue-400 rounded-full mt-2 flex-shrink-0" />
+                      <div className="w-1.5 h-1.5 bg-white rounded-full mt-2 flex-shrink-0" />
                       Expert advice on best strategies for your goals
                     </li>
                   </ul>
@@ -217,10 +217,10 @@ const CalendarDialog: React.FC<CalendarDialogProps> = ({ serviceName, isOpen, on
 
                 <div className="mt-6">
                   <a 
-                    href="https://cal.com" 
+                    href={process.env.NEXT_PUBLIC_CAL_URL || "https://cal.com/lumiere-ccdlpn/30min"} 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="w-full bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors flex items-center justify-center gap-2"
+                    className="w-full bg-white text-black px-6 py-3 rounded-lg font-semibold hover:bg-gray-200 transition-colors flex items-center justify-center gap-2"
                   >
                     Schedule Consultation
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -268,7 +268,7 @@ const ServiceDialog: React.FC<ServiceDialogProps> = ({ service, isOpen, onClose,
             }}
           />
           <div 
-            className="fixed inset-0 z-[99999] flex items-center justify-center p-4 pointer-events-none"
+            className="fixed inset-0 z-[99999] flex items-center justify-center px-3 py-6 pointer-events-none"
             style={{ 
               overflow: 'hidden', 
               zIndex: 99999
@@ -277,7 +277,7 @@ const ServiceDialog: React.FC<ServiceDialogProps> = ({ service, isOpen, onClose,
             <motion.div
               layoutId={`card-${service.id}`}
               data-modal-content
-              className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto bg-gray-900 rounded-2xl shadow-2xl border border-gray-700 pointer-events-auto"
+              className="relative w-full max-w-xl max-h-[75vh] overflow-y-auto bg-black rounded-2xl shadow-2xl border border-white/15 pointer-events-auto"
               style={{
                 WebkitOverflowScrolling: 'touch',
                 touchAction: 'pan-y'
@@ -305,24 +305,24 @@ const ServiceDialog: React.FC<ServiceDialogProps> = ({ service, isOpen, onClose,
             >
               <button
                 onClick={onClose}
-                className="absolute right-4 top-4 z-10 rounded-full bg-gray-800/80 p-2 hover:bg-gray-800 transition-colors text-gray-300"
+                className="absolute right-3 top-3 z-10 rounded-full bg-gray-800/80 p-1.5 hover:bg-gray-800 transition-colors text-gray-300"
               >
-                <X className="h-5 w-5" />
+                <X className="h-4 w-4" />
               </button>
 
-              <div className="p-8">
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="rounded-full bg-blue-400/10 p-3">
+              <div className="p-5 md:p-6">
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="rounded-full bg-white/5 p-3 border border-white/15">
                     {service.icon}
                   </div>
                   <div>
-                    <h2 className="text-3xl font-bold text-white">{service.title}</h2>
-                    <p className="text-lg text-gray-400 mt-1">{service.description}</p>
+                    <h2 className="text-2xl md:text-3xl font-bold text-white">{service.title}</h2>
+                    <p className="description-text description-text-muted mt-1 max-w-md">{service.description}</p>
                   </div>
                 </div>
 
-                <div className="grid md:grid-cols-2 gap-8">
-                  <div className="space-y-6">
+                <div className="grid md:grid-cols-2 gap-6">
+                <div className="space-y-5">
                     <div>
                       <h3 className="text-xl font-semibold mb-3 text-white">Key Features</h3>
                       <ul className="space-y-2">
@@ -332,7 +332,7 @@ const ServiceDialog: React.FC<ServiceDialogProps> = ({ service, isOpen, onClose,
                             initial={{ opacity: 0, x: -20 }}
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ delay: index * 0.1 }}
-                            className="flex items-center gap-2 text-gray-300"
+                            className="flex items-center gap-2 description-text description-text-muted"
                           >
                             <div className="w-2 h-2 bg-blue-400 rounded-full" />
                             {feature}
@@ -375,7 +375,7 @@ const ServiceDialog: React.FC<ServiceDialogProps> = ({ service, isOpen, onClose,
                             <div className="w-6 h-6 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-semibold">
                               {index + 1}
                             </div>
-                            <p className="text-gray-300">{step}</p>
+                            <p className="description-text description-text-muted">{step}</p>
                           </motion.div>
                         ))}
                       </div>
@@ -390,7 +390,7 @@ const ServiceDialog: React.FC<ServiceDialogProps> = ({ service, isOpen, onClose,
                             initial={{ opacity: 0, x: 20 }}
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ delay: index * 0.1 + 0.7 }}
-                            className="flex items-center gap-2 text-gray-300"
+                            className="flex items-center gap-2 description-text description-text-muted"
                           >
                             <div className="w-2 h-2 bg-blue-500 rounded-full" />
                             {deliverable}
@@ -408,7 +408,7 @@ const ServiceDialog: React.FC<ServiceDialogProps> = ({ service, isOpen, onClose,
                   className="mt-6"
                 >
                   <a 
-                    href="https://cal.com" 
+                    href={process.env.NEXT_PUBLIC_CAL_URL || "https://cal.com/lumiere-ccdlpn/30min"} 
                     target="_blank" 
                     rel="noopener noreferrer"
                     className="w-full bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors flex items-center justify-center gap-2"
@@ -517,7 +517,7 @@ export default function ServicesSection() {
       id: "video-editing",
       title: "Video Editing",
       description: "Professional video editing services for all your content needs",
-      icon: <Video className="h-6 w-6 text-blue-400" />,
+      icon: <Video className="h-6 w-6 text-white" />,
       features: [
         "Professional color grading",
         "Motion graphics and animations",
@@ -552,7 +552,7 @@ export default function ServicesSection() {
       id: "social-media-reels",
       title: "Social Media Reels",
       description: "Engaging short-form content for Instagram, TikTok, and YouTube Shorts",
-      icon: <Share2 className="h-6 w-6 text-blue-400" />,
+      icon: <Share2 className="h-6 w-6 text-white" />,
       features: [
         "Trending format optimization",
         "Platform-specific editing",
@@ -587,7 +587,7 @@ export default function ServicesSection() {
       id: "digital-marketing",
       title: "Digital Marketing",
       description: "Comprehensive digital marketing strategies to grow your business",
-      icon: <TrendingUp className="h-6 w-6 text-blue-400" />,
+      icon: <TrendingUp className="h-6 w-6 text-white" />,
       features: [
         "SEO optimization",
         "Social media management",
@@ -622,7 +622,7 @@ export default function ServicesSection() {
       id: "brand-campaigns",
       title: "Marketing Campaigns",
       description: "Creative campaigns that build brand awareness",
-      icon: <Megaphone className="h-6 w-6 text-blue-400" />,
+      icon: <Megaphone className="h-6 w-6 text-white" />,
       features: [
         "Brand identity development",
         "Creative campaign concepts",
@@ -657,7 +657,7 @@ export default function ServicesSection() {
       id: "landing-pages",
       title: "Brand Landing Pages",
       description: "High-converting landing pages for your business",
-      icon: <Globe className="h-6 w-6 text-blue-400" />,
+      icon: <Globe className="h-6 w-6 text-white" />,
       features: [
         "Conversion-optimized design",
         "Mobile-responsive layouts",
@@ -692,7 +692,7 @@ export default function ServicesSection() {
       id: "website-making",
       title: "Website Development",
       description: "Custom websites that represent your brand and drive business growth",
-      icon: <Monitor className="h-6 w-6 text-blue-400" />,
+      icon: <Monitor className="h-6 w-6 text-white" />,
       features: [
         "Custom design and development",
         "Content management system",
@@ -762,7 +762,7 @@ export default function ServicesSection() {
           <h1 className="text-4xl md:text-6xl font-bold text-white mb-4">
             Our Services
           </h1>
-          <p className="text-xl text-gray-400 max-w-3xl mx-auto">
+          <p className="description-text description-text-muted max-w-3xl mx-auto">
             Comprehensive digital solutions to elevate your brand and drive business growth. 
             Click on any service to learn more about what we offer.
           </p>
@@ -792,7 +792,7 @@ export default function ServicesSection() {
           className="text-center"
         >
           <a 
-            href="https://cal.com" 
+            href={process.env.NEXT_PUBLIC_CAL_URL || "https://cal.com/lumiere-ccdlpn/30min"} 
             target="_blank" 
             rel="noopener noreferrer"
             className="bg-transparent border-2 border-white text-white px-8 py-4 rounded-lg font-semibold text-lg transition-colors inline-flex items-center gap-2 hover:bg-white hover:text-black"

@@ -136,7 +136,7 @@ const ReelCard: React.FC<ReelCardProps> = ({ reel, isExpanded, onHover, onLeave,
                 </div>
                 <div>
                   <h2 className="text-lg font-bold text-white mb-2">{reel.title}</h2>
-                  <p className="text-sm text-gray-300 leading-relaxed">{reel.description}</p>
+                  <p className="description-text description-text-muted leading-relaxed max-w-xl">{reel.description}</p>
                 </div>
                 <div className="space-y-2">
                   <h4 className="text-sm font-medium text-white">Tags</h4>
@@ -191,6 +191,14 @@ const ReelCard: React.FC<ReelCardProps> = ({ reel, isExpanded, onHover, onLeave,
                 autoPlay={true}
                 style={{ aspectRatio: isMobile ? "9/16" : "auto" }}
               />
+              {reel.id === "1" && (
+                <div
+                  className="absolute bottom-4 left-4 text-[11px] md:text-xs tracking-wide text-white/60"
+                  style={{ fontFamily: "var(--font-inter)" }}
+                >
+                  Nohil Arthur
+                </div>
+              )}
               <button
                 onClick={(e) => { e.stopPropagation(); setIsMuted(!isMuted) }}
                 onMouseDown={(e) => e.stopPropagation()}
@@ -233,8 +241,8 @@ const ReelCard: React.FC<ReelCardProps> = ({ reel, isExpanded, onHover, onLeave,
                   </div>
                 </div>
                 <div>
-                  <h2 className="text-lg font-bold text-white mb-2">{reel.title}</h2>
-                  <p className="text-sm text-gray-300 leading-relaxed">{reel.description}</p>
+                  <h2 className="text-lg font-bold text-white mb-2 max-w-xl">{reel.title}</h2>
+                  <p className="description-text description-text-muted leading-relaxed max-w-xl">{reel.description}</p>
                 </div>
                 <div className="space-y-2">
                   <h4 className="text-sm font-medium text-white">Tags</h4>
@@ -290,7 +298,7 @@ const ReelsSection: React.FC = () => {
       videoUrl: "/video-1.mp4",
       thumbnail: "/thumbnail-1.jpg",
       title: "KOREAN CLOTHING BRAND",
-      creator: "Noil Arthur",
+      creator: "Team Lumière",
       likes: 1200,
       comments: 45,
       description: "Fusing K-style flair with urban Bangalore vibes, this promo reel shows how branding comes to life.",
@@ -325,7 +333,9 @@ const ReelsSection: React.FC = () => {
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-8 md:mb-12">
           <h1 className="text-3xl md:text-4xl font-bold text-white mb-4">Featured Reels</h1>
-          <p className="text-base md:text-lg text-gray-400">Discover amazing content from our creators</p>
+          <p className="description-text description-text-muted max-w-2xl mx-auto">
+            Discover a curated selection of reels crafted to move fast, feel premium, and keep your audience watching.
+          </p>
         </div>
         <div className={cn("flex justify-center items-center gap-4 md:gap-8", isMobile ? "flex-col" : "flex-row flex-wrap")}> 
           {reelsData.map((reel) => (

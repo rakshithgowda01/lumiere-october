@@ -3,7 +3,7 @@ import type { Metadata } from "next"
 import dynamic from "next/dynamic"
 import { GeistSans } from "geist/font/sans"
 import { GeistMono } from "geist/font/mono"
-import { Playfair_Display, Poppins } from "next/font/google"
+import { Playfair_Display, Poppins, Inter } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import { Suspense } from "react"
 const BackgroundClient = dynamic(() => import("@/components/ui/background"), { ssr: false })
@@ -22,6 +22,12 @@ const poppins = Poppins({
   weight: ["300", "400", "500", "600", "700"],
 })
 
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  weight: ["300", "400", "500", "600"],
+})
+
 export const metadata: Metadata = {
   title: "Lumière - Where Stories Shine Brighter",
   description: "Professional video production and editing services",
@@ -35,7 +41,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable} ${playfairDisplay.variable} ${poppins.variable}`}>
+      <body
+        className={`font-sans ${GeistSans.variable} ${GeistMono.variable} ${playfairDisplay.variable} ${poppins.variable} ${inter.variable}`}
+      >
         <div className="fixed inset-0 z-0">
           <BackgroundClient />
         </div>

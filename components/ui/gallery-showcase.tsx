@@ -163,7 +163,17 @@ export const GalleryShowcase: React.FC<GalleryShowcaseProps> = ({
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm" onClick={closeModal}>
             <div className="flex items-center justify-center min-h-screen p-4">
               <motion.div initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.8, opacity: 0 }} className="bg-gray-900 rounded-lg shadow-2xl w-auto max-h-[90vh] overflow-hidden max-w-[95vw]" onClick={(e) => e.stopPropagation()}>
-                <div className="flex justify-end items-center p-4 border-b border-gray-700">
+                <div className="flex justify-between items-center p-4 border-b border-gray-700">
+                  <div className="text-left max-w-xs">
+                    <h3 className="text-sm md:text-base font-semibold text-white mb-1 line-clamp-1">
+                      {photos[modalCurrentIndex]?.title}
+                    </h3>
+                    {photos[modalCurrentIndex]?.description && (
+                      <p className="description-text description-text-muted text-xs md:text-sm line-clamp-2">
+                        {photos[modalCurrentIndex]?.description}
+                      </p>
+                    )}
+                  </div>
                   <Button variant="ghost" size="sm" onClick={closeModal} className="text-gray-400 hover:text-white">
                     <X className="h-5 w-5" />
                   </Button>
@@ -197,7 +207,9 @@ export default function GalleryShowcasePage() {
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-8">
           <h1 className="text-3xl md:text-4xl font-bold text-white mb-4">Gallery Showcase</h1>
-          <p className="text-gray-400">Infinite rolling gallery with smooth animations. Click any image for detailed view.</p>
+          <p className="description-text description-text-muted max-w-2xl mx-auto">
+            Infinite rolling gallery with smooth animations. Tap any image to explore it in detail.
+          </p>
         </div>
         <GalleryShowcase />
       </div>

@@ -35,7 +35,7 @@ export function ScheduleCalendar({ showHoverGradient = true, hideOverflow = true
     0
   ).getDate();
 
-  const bookingLink = `https://cal.com/aliimam/designali`;
+  const bookingLink = process.env.NEXT_PUBLIC_CAL_URL || "https://cal.com/lumiere-ccdlpn/30min";
 
   const renderCalendarDays = () => {
     let days: React.ReactNode[] = [

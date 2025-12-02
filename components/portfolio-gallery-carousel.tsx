@@ -263,8 +263,8 @@ export default function PortfolioGalleryCarousel() {
           <h1 className="text-4xl md:text-6xl font-bold text-white font-mono mb-4">
             Portfolio Gallery
           </h1>
-          <p className="text-gray-400 text-base md:text-lg">
-            Explore our work across different categories
+          <p className="description-text description-text-muted max-w-2xl mx-auto">
+            Explore our work across categories, from reels and campaigns to product and portrait storytelling.
           </p>
         </motion.div>
 
@@ -274,7 +274,7 @@ export default function PortfolioGalleryCarousel() {
           <motion.button
             onClick={prevCategory}
             className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 md:w-14 md:h-14 rounded-full bg-black/70 border border-white/20 hover:bg-black/90 text-white transition-all flex items-center justify-center backdrop-blur-sm shadow-lg"
-            whileHover={{ scale: 1.1, x: -2 }}
+            whileHover={{ scale: 1.08 }}
             whileTap={{ scale: 0.9 }}
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -286,7 +286,7 @@ export default function PortfolioGalleryCarousel() {
           <motion.button
             onClick={nextCategory}
             className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 md:w-14 md:h-14 rounded-full bg-black/70 border border-white/20 hover:bg-black/90 text-white transition-all flex items-center justify-center backdrop-blur-sm shadow-lg"
-            whileHover={{ scale: 1.1, x: 2 }}
+            whileHover={{ scale: 1.08 }}
             whileTap={{ scale: 0.9 }}
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}

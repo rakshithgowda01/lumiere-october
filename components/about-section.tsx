@@ -32,14 +32,14 @@ export default function AboutSection() {
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-8 font-mono">About Lumière</h2>
           </ScrollFloat>
           <ScrollFloat intensity={0.2}>
-            <p className="text-lg text-secondary leading-relaxed mb-4">
+            <p className="description-text description-text-muted mb-4">
               We are a creative video production company dedicated to bringing your stories to life. With years of
               experience in video editing, content creation, and digital marketing, we transform ideas into compelling
               visual narratives that captivate audiences.
             </p>
           </ScrollFloat>
           <ScrollFloat intensity={0.1}>
-            <p className="text-lg text-secondary leading-relaxed">
+            <p className="description-text description-text-muted">
               From concept to completion, we handle every aspect of video production with meticulous attention to detail
               and a passion for storytelling excellence.
             </p>

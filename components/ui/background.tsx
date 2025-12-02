@@ -47,11 +47,10 @@ const Background: React.FC<BackgroundProps> = ({ children, className }) => {
   const dimensions = useDimensions(containerRef)
 
   const colors = [
-    "rgba(139, 92, 246, 0.55)",   // violet-500
-    "rgba(59, 130, 246, 0.5)",    // blue-500
-    "rgba(16, 185, 129, 0.45)",   // emerald-500
-    "rgba(236, 72, 153, 0.5)",    // pink-500
-    "rgba(14, 165, 233, 0.5)",    // sky-500
+    "rgba(255, 255, 255, 0.18)",
+    "rgba(229, 229, 229, 0.16)",
+    "rgba(209, 213, 219, 0.14)",
+    "rgba(156, 163, 175, 0.12)",
   ]
 
   const circleSize = Math.max(dimensions.width || 800, dimensions.height || 600)
@@ -61,7 +60,7 @@ const Background: React.FC<BackgroundProps> = ({ children, className }) => {
       ref={containerRef}
       className={cn("fixed inset-0 z-0 overflow-hidden bg-black", className)}
     >
-      <div className="absolute inset-0 blur-2xl">
+      <div className="absolute inset-0 blur-3xl">
         {colors.map((color, index) => (
           <svg
             key={index}
@@ -69,23 +68,14 @@ const Background: React.FC<BackgroundProps> = ({ children, className }) => {
             style={{
               top: `${Math.random() * 50}%`,
               left: `${Math.random() * 50}%`,
-              // @ts-expect-error CSS vars
               "--background-gradient-speed": "25s",
-              // @ts-expect-error CSS vars
               "--tx-1": Math.random() - 0.5,
-              // @ts-expect-error CSS vars
               "--ty-1": Math.random() - 0.5,
-              // @ts-expect-error CSS vars
               "--tx-2": Math.random() - 0.5,
-              // @ts-expect-error CSS vars
               "--ty-2": Math.random() - 0.5,
-              // @ts-expect-error CSS vars
               "--tx-3": Math.random() - 0.5,
-              // @ts-expect-error CSS vars
               "--ty-3": Math.random() - 0.5,
-              // @ts-expect-error CSS vars
               "--tx-4": Math.random() - 0.5,
-              // @ts-expect-error CSS vars
               "--ty-4": Math.random() - 0.5,
               animationDelay: `${index * 2}s`,
             } as React.CSSProperties}
@@ -93,7 +83,7 @@ const Background: React.FC<BackgroundProps> = ({ children, className }) => {
             height={circleSize * (0.6 + Math.random() * 0.8)}
             viewBox="0 0 100 100"
           >
-            <circle cx="50" cy="50" r="50" fill={color} className="opacity-90" />
+            <circle cx="50" cy="50" r="50" fill={color} className="opacity-80" />
           </svg>
         ))}
       </div>
